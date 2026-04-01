@@ -180,7 +180,7 @@ export default function HeartFinale() {
           ✨ Happy Birthday Alexsa ✨
         </p>
         <p style={{ color:'#ffb6c1', fontSize:12, marginTop:4, fontFamily:"'Share Tech Mono',monospace" }}>
-          ❤️ Made with love ❤️
+          Made For Alexsa 
         </p>
       </div>
 
