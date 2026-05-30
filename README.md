@@ -10,10 +10,7 @@ aku yapping, alay cuma ke kamu doangggg...., ketua rada engga rada deng, si kami
 samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
 # oiyaaaa parikk janlup di puterrr juga musik nya yaaa..
-<audio controls>
-  <source src="public/music/vn1.mp3" type="audio/mpeg">
-  Browser kamu gak mendukung pemutar audio ini, Parik.
-</audio>
+🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
 
 ### 🎙️ Audio Bagian 2: [Kasih Judul Bebas, Misal: Pesan Tambahan]
 <audio controls>   
