@@ -1,4 +1,4 @@
-##### Happy Birthday Farikha
+### Happy Birthday Farikha
 misi - misiii.... parikk?
 halooo selamat ulang tahun yaaa..., semoga panjang umur, sehat selalu & dilancarkan segala urusan nya.
 semoga hal-hal baik selalu datang ke ke parika silmisyu, oiyaaaa. ngomong-ngomong kalo web nya ada bug
