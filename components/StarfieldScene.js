@@ -88,12 +88,12 @@ export default function StarfieldScene({ onDone }) {
     // Confetti interval
     const confettiInterval = setInterval(() => {
       if (particleContainer) spawnConfetti(particleContainer)
-    }, 180)
+    }, 350)
 
     // Emoji drift interval
     const emojiInterval = setInterval(() => {
       if (particleContainer) spawnDriftEmoji(particleContainer)
-    }, 1200)
+    }, 200)
 
     const t4 = setTimeout(() => {
       clearInterval(confettiInterval)
@@ -206,7 +206,6 @@ export default function StarfieldScene({ onDone }) {
               style={{
                 width: 'clamp(160px, 38vw, 280px)',
                 height: 'auto',
-                mixBlendMode: 'screen',
                 borderRadius: '12px',
                 display: 'block',
               }}
