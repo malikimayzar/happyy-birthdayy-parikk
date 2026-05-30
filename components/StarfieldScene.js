@@ -74,7 +74,10 @@ export default function StarfieldScene({ onDone }) {
         catRef.current.style.opacity = '1'
         catRef.current.style.transform = 'scale(1)'
         const video = catRef.current.querySelector('video')
-        if (video) video.play().catch(() => {})
+        if (video) {
+          video.muted = true
+          video.play().catch(() => {})
+        }
       }
     }, 700)
 
@@ -202,7 +205,12 @@ export default function StarfieldScene({ onDone }) {
           }}>
             <video
               src="/video/cat-birthday.mp4"
-              autoPlay loop muted playsInline
+              autoPlay
+              loop
+              muted
+              playsInline
+              webkit-playsinline="true"
+              preload="auto"
               style={{
                 width: 'clamp(160px, 38vw, 280px)',
                 height: 'auto',
