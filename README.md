@@ -1,74 +1,22 @@
-# 💖 Lovescape for Alexa — v2
+### Happy Birthday Farikha
+misi - misiii.... parikk?
+halooo selamat ulang tahun yaaa..., semoga panjang umur, sehat selalu & dilancarkan segala urusan nya.
+semoga hal-hal baik selalu datang ke ke parika silmisyu, oiyaaaa. ngomong-ngomong kalo web nya ada bug
+atau kurang baguss, sorry yaaa...☝🏻😨 baru nyobaaa in bikin web soal nya heheheheheh
 
-Birthday website cinematic. Flow: Splash → Matrix+Countdown → Video → Birthday Cat → 3D Book → Photo Heart ❤️
+### oiyaaa parikkkk...., jangan di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
+aku yapping, alay cuma ke kamu doangggg...., ketua rada engga rada deng, si kami "JAIMMMM" parahhh
+## SEKLIII LAGIIII METTT ULANGG TAHUNNN paaarikaaa...
+samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
----
+# oiyaaaa parikk janlup di puterrr juga musik nya yaaa..
+<audio controls>
+  <source src="public/music/vn1.mp3" type="audio/mpeg">
+  Browser kamu gak mendukung pemutar audio ini, Parik.
+</audio>
 
-## 📁 Struktur
-
-```
-lovescape-alexa/
-├── app/
-│   ├── globals.css
-│   ├── layout.js
-│   └── page.js            ← orchestrator semua scene
-├── components/
-│   ├── SpaceBg.js         ← starfield canvas (persistent)
-│   ├── MusicBtn.js        ← tombol musik
-│   ├── NavDots.js         ← navigasi dots
-│   ├── SplashScene.js     ← tap to enter + heart cursor
-│   ├── MatrixScene.js     ← matrix rain + countdown + glitch words
-│   ├── VideoScene.js      ← video pesan (upload atau path)
-│   ├── StarfieldScene.js  ← birthday cat animation
-│   ├── BookScene.js       ← 3D book (desktop) / swipe (mobile)
-│   └── HeartFinale.js     ← foto pop ke bentuk hati + confetti + CTA
-└── public/
-    ├── music/bg.mp3       ← TARUH MUSIK DI SINI
-    └── photos/            ← TARUH FOTO DI SINI (1.jpg - 6.jpg)
-```
-
----
-
-## 🚀 Setup
-
-### 1. Install & run
-```bash
-npm install
-npm run dev
-```
-
-### 2. Foto (PENTING)
-Taruh foto di `public/photos/` dengan nama:
-- `1.jpg` sampai `6.jpg` (untuk book + heart)
-
-Atau edit array di `BookScene.js` dan `HeartFinale.js`:
-```js
-const BOOK_PHOTOS = ['/photos/namafoto.jpg', ...]
-const HEART_PHOTOS = [{ src: '/photos/namafoto.jpg' }, ...]
-```
-
-### 3. Musik
-Taruh MP3 di `public/music/bg.mp3`
-
-### 4. Video (opsional)
-Edit `VideoScene.js`:
-```js
-const VIDEO_SRC = '/video/pesan.mp4'
-```
-Atau biarkan kosong — user bisa upload manual di scene video.
-
-### 5. WhatsApp CTA
-Edit `HeartFinale.js`:
-```js
-const WHATSAPP_NUMBER = '6281234567890'
-const WHATSAPP_MSG    = 'Happy Birthday Alexa! 🎂❤️'
-```
-
----
-
-## 🌐 Deploy ke Vercel
-```bash
-npm install next@latest
-npx vercel --prod
-```
-# SendiAlexa
+### 🎙️ Audio Bagian 2: [Kasih Judul Bebas, Misal: Pesan Tambahan]
+<audio controls>   
+  <source src="public/music/vn2.mp3" type="audio/mpeg">
+  Browser kamu gak mendukung pemutar audio ini, Parik.
+</audio>
