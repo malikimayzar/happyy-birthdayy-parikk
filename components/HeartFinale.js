@@ -19,12 +19,10 @@ const BASE_PHOTOS = [
 
 const PHOTOS = Array.from({ length: 24 }, (_, i) => BASE_PHOTOS[i % BASE_PHOTOS.length])
 const FALLBACKS = ['♡', '✦', '♥', '✧']
-
 const POLAROID_LABELS = [
   'happy birthday', 'with love', 'xoxo', 'forever ♡',
   'always you', 'my dear', 'smile ♥', 'stay sweet',
 ]
-
 
 function heartPositions(n) {
   const positions = []
@@ -53,19 +51,25 @@ function heartPositions(n) {
   return positions
 }
 
+// ── plasPop: throttled, max 1 AudioContext per 80ms ──
+let lastPopTime = 0
 function plasPop() {
+  const now = Date.now()
+  if (now - lastPopTime < 80) return
+  lastPopTime = now
   try {
     const ac = new (window.AudioContext || window.webkitAudioContext)()
     const osc = ac.createOscillator()
     const gain = ac.createGain()
-    const now = ac.currentTime
+    const t = ac.currentTime
     osc.connect(gain); gain.connect(ac.destination)
     osc.type = 'sine'
-    osc.frequency.setValueAtTime(520 + Math.random() * 280, now)
-    osc.frequency.exponentialRampToValueAtTime(220, now + 0.1)
-    gain.gain.setValueAtTime(0.075, now)
-    gain.gain.linearRampToValueAtTime(0, now + 0.12)
-    osc.start(now); osc.stop(now + 0.12)
+    osc.frequency.setValueAtTime(520 + Math.random() * 280, t)
+    osc.frequency.exponentialRampToValueAtTime(220, t + 0.1)
+    gain.gain.setValueAtTime(0.06, t)
+    gain.gain.linearRampToValueAtTime(0, t + 0.12)
+    osc.start(t); osc.stop(t + 0.12)
+    setTimeout(() => ac.close(), 200)
   } catch (e) {}
 }
 
@@ -81,7 +85,9 @@ function launchConfetti(canvas) {
   canvas.style.width = `${window.innerWidth}px`
   canvas.style.height = `${window.innerHeight}px`
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-  const parts = Array.from({ length: 120 }, () => ({
+  // kurangi partikel 120 → 60 di HP
+  const count = window.innerWidth < 768 ? 60 : 120
+  const parts = Array.from({ length: count }, () => ({
     x: window.innerWidth * 0.5 + (Math.random() - 0.5) * 100,
     y: window.innerHeight * 0.45 + (Math.random() - 0.5) * 60,
     vx: (Math.random() - 0.5) * 6,
@@ -98,10 +104,9 @@ function launchConfetti(canvas) {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     parts.forEach(p => {
       p.x += p.vx; p.y += p.vy; p.vy += p.gravity
-      p.rot += p.rotV; p.life -= 0.005
+      p.rot += p.rotV; p.life -= 0.006
       ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180)
       ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.color
-      ctx.shadowBlur = 8; ctx.shadowColor = p.color
       if (p.circle) { ctx.beginPath(); ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx.fill() }
       else ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2)
       ctx.restore()
@@ -110,7 +115,7 @@ function launchConfetti(canvas) {
       raf = requestAnimationFrame(draw)
   }
   draw()
-  setTimeout(() => { cancelAnimationFrame(raf); canvas.style.opacity = '0' }, 5500)
+  setTimeout(() => { cancelAnimationFrame(raf); canvas.style.opacity = '0' }, 5000)
 }
 
 function useHeartSize() {
@@ -134,17 +139,24 @@ function useHeartSize() {
   }, [])
   return sizes
 }
+
 const ORGANIC_ROTATIONS = [-7, 3, -2, 6, -5, 4, -8, 2, 5, -3, 7, -4, 1, -6, 3, -1,
                             6, -5, 2, -7, 4, -3, 8, -2]
 
-function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, index }) {
+function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, index, visible }) {
   const [imgErr, setImgErr] = useState(false)
   const [hovered, setHovered] = useState(false)
   const organicRotate = rotate + ORGANIC_ROTATIONS[index % ORGANIC_ROTATIONS.length]
+
+  // plasPop dipanggil saat card visible, bukan saat mount
   useEffect(() => {
-    const id = setTimeout(plasPop, delay)
+    if (!visible) return
+    const id = setTimeout(plasPop, 60)
     return () => clearTimeout(id)
-  }, [delay])
+  }, [visible])
+
+  // Tidak render sama sekali sebelum visible — hemat DOM
+  if (!visible) return null
 
   return (
     <div
@@ -158,11 +170,7 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
         top: `calc(${targetY}% - ${cardSize / 2}px)`,
         borderRadius: Math.round(cardSize * 0.10),
         overflow: 'hidden',
-        borderTop: '3px solid rgba(255,255,255,.97)',
-        borderLeft: '3px solid rgba(255,255,255,.97)',
-        borderRight: '3px solid rgba(255,255,255,.97)',
-        borderBottom: '3px solid rgba(255,255,255,.97)',
-        
+        border: '3px solid rgba(255,255,255,.97)',
         boxShadow: hovered
           ? `0 ${Math.round(cardSize*0.18)}px ${Math.round(cardSize*0.35)}px rgba(0,0,0,.75),
              0 0 22px rgba(255,0,127,.9),
@@ -171,10 +179,8 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
              0 2px 6px rgba(0,0,0,.5),
              0 0 12px rgba(255,0,127,.4)`,
         opacity: 0,
-        animation: `popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) ${delay}ms forwards`,
-        transform: hovered
-          ? `scale(1.12) rotate(0deg)`
-          : `scale(1) rotate(${organicRotate}deg)`,
+        animation: `popIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards`,
+        transform: hovered ? `scale(1.12) rotate(0deg)` : `scale(1) rotate(${organicRotate}deg)`,
         transition: 'box-shadow .3s ease, transform .3s cubic-bezier(0.34,1.2,0.64,1)',
         willChange: 'transform',
         '--card-rotate': `${organicRotate}deg`,
@@ -185,20 +191,13 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
         cursor: 'pointer',
       }}
     >
-      {/* Photo area — flex-grow fills all space above label */}
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
         {src && !imgErr ? (
           <img
             src={src}
             alt=""
             onError={() => setImgErr(true)}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-              pointerEvents: 'none',
-            }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }}
           />
         ) : (
           <div style={{
@@ -207,33 +206,20 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
             color: '#ff66b2',
             background: 'linear-gradient(135deg, rgba(255,102,178,.26), rgba(255,0,127,.12))',
             fontSize: Math.round(cardSize * 0.38),
-          }}>
-            {fallback}
-          </div>
+          }}>{fallback}</div>
         )}
       </div>
-
-      {/* Polaroid label — inside white bottom margin */}
       <div style={{
         height: Math.round(cardSize * 0.22),
         background: '#fdf6f0',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-        paddingBottom: 2,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        flexShrink: 0, paddingBottom: 2,
       }}>
-        <p
-          className={greatVibes.className}
-          style={{
-            margin: 0,
-            color: '#2d1a1a',
-            fontSize: Math.max(10, Math.round(cardSize * 0.175)),
-            lineHeight: 1,
-            userSelect: 'none',
-            pointerEvents: 'none',
-          }}
-        >
+        <p className={greatVibes.className} style={{
+          margin: 0, color: '#2d1a1a',
+          fontSize: Math.max(10, Math.round(cardSize * 0.175)),
+          lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
+        }}>
           {POLAROID_LABELS[index % POLAROID_LABELS.length]}
         </p>
       </div>
@@ -244,20 +230,34 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
 export default function HeartFinale() {
   const [titleVisible, setTitleVisible] = useState(false)
   const [isBeating, setIsBeating] = useState(false)
+  // ── BATCH RENDER: mulai dari 0, tambah 4 card tiap 120ms ──
+  const [visibleCount, setVisibleCount] = useState(0)
   const confettiRef = useRef(null)
   const targetPos = useMemo(() => heartPositions(PHOTOS.length), [])
   const { container: containerSize, card: cardSize } = useHeartSize()
 
   useEffect(() => {
-    const allDone = 80 + PHOTOS.length * 80 + 500
-    const titleAt = allDone - 400
-    const confettiAt = allDone + 200
-    const beatAt = allDone + 600
+    // Batch render: 4 card per tick, interval 120ms
+    // Total: 24 card = 6 batch = ~720ms
+    const BATCH = 4
+    const INTERVAL = 120
+    let count = 0
+    const interval = setInterval(() => {
+      count += BATCH
+      setVisibleCount(Math.min(count, PHOTOS.length))
+      if (count >= PHOTOS.length) clearInterval(interval)
+    }, INTERVAL)
 
-    const t1 = setTimeout(() => setTitleVisible(true), titleAt)
-    const t2 = setTimeout(() => launchConfetti(confettiRef.current), confettiAt)
-    const t3 = setTimeout(() => setIsBeating(true), beatAt)
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+    // Title muncul setelah semua card visible
+    const allDone = (PHOTOS.length / BATCH) * INTERVAL + 300
+    const t1 = setTimeout(() => setTitleVisible(true), allDone)
+    const t2 = setTimeout(() => launchConfetti(confettiRef.current), allDone + 400)
+    const t3 = setTimeout(() => setIsBeating(true), allDone + 800)
+
+    return () => {
+      clearInterval(interval)
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3)
+    }
   }, [])
 
   return (
@@ -265,8 +265,8 @@ export default function HeartFinale() {
       <style>{`
         @keyframes popIn {
           0%   { opacity: 0; transform: scale(0) rotate(0deg); }
-          60%  { opacity: 1; transform: scale(1.15) rotate(var(--card-rotate)); }
-          100% { opacity: 1; transform: scale(1)    rotate(var(--card-rotate)); }
+          60%  { opacity: 1; transform: scale(1.1) rotate(var(--card-rotate)); }
+          100% { opacity: 1; transform: scale(1)   rotate(var(--card-rotate)); }
         }
         @keyframes heartbeat {
           0%,100% { transform: scale(1); }
@@ -287,62 +287,46 @@ export default function HeartFinale() {
       }} />
 
       <div style={{
-        width: '100%',
-        minHeight: '100dvh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: '100%', minHeight: '100dvh',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
         gap: 'clamp(4px, 1vh, 10px)',
-        padding: '16px',
-        paddingTop: '8vh',
+        padding: '16px', paddingTop: '8vh',
         boxSizing: 'border-box',
       }}>
-
         {/* Title */}
         <div style={{
-          zIndex: 25,
-          textAlign: 'center',
-          marginBottom: 0,
-          marginTop: 0,
+          zIndex: 25, textAlign: 'center',
           opacity: titleVisible ? 1 : 0,
           transform: titleVisible ? 'translateY(0)' : 'translateY(-8px)',
           transition: 'opacity 1.5s ease-in, transform 1.5s cubic-bezier(.25,.8,.25,1)',
           willChange: 'transform, opacity',
         }}>
-          <p
-            className={greatVibes.className}
-            style={{
-              color: '#fff0f6',
-              fontSize: 'clamp(32px, 9vw, 62px)',
-              fontWeight: 400,
-              margin: 0,
-              lineHeight: 1.2,
-              letterSpacing: '0.02em',
-              textShadow: [
-                '0 0 18px rgba(255,182,213,0.9)',
-                '0 0 36px rgba(255,80,160,0.55)',
-                '0 0 72px rgba(255,0,100,0.25)',
-                '0 2px 4px rgba(0,0,0,0.6)',
-              ].join(', '),
-              animation: titleVisible ? 'subtlePulse 5s ease-in-out infinite' : 'none',
-            }}
-          >
+          <p className={greatVibes.className} style={{
+            color: '#fff0f6',
+            fontSize: 'clamp(32px, 9vw, 62px)',
+            fontWeight: 400, margin: 0,
+            lineHeight: 1.2, letterSpacing: '0.02em',
+            textShadow: [
+              '0 0 18px rgba(255,182,213,0.9)',
+              '0 0 36px rgba(255,80,160,0.55)',
+              '0 0 72px rgba(255,0,100,0.25)',
+              '0 2px 4px rgba(0,0,0,0.6)',
+            ].join(', '),
+            animation: titleVisible ? 'subtlePulse 5s ease-in-out infinite' : 'none',
+          }}>
             Happy Birthday Silmisyuu
           </p>
         </div>
 
-        {/* Heart container dengan heartbeat wrapper */}
+        {/* Heart container */}
         <div style={{
           position: 'relative',
-          width: containerSize,
-          height: containerSize,
+          width: containerSize, height: containerSize,
           flexShrink: 0,
           willChange: 'transform',
           animation: isBeating ? 'heartbeat 2.8s ease-in-out infinite' : 'none',
         }}>
-
-          {/* SVG heart outline */}
           <svg
             style={{
               position: 'absolute', width: '100%', height: '100%',
@@ -371,10 +355,11 @@ export default function HeartFinale() {
               targetX={targetPos[i].x}
               targetY={targetPos[i].y}
               rotate={targetPos[i].rotate}
-              delay={80 + i * 80}
+              delay={0}
               fallback={FALLBACKS[i % FALLBACKS.length]}
               cardSize={cardSize}
               index={i}
+              visible={i < visibleCount}
             />
           ))}
         </div>
