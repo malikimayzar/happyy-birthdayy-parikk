@@ -19,5 +19,5 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
 🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
 
-### Ini Temen aku juga katanya.... mau nitip pesann ini kata doi
+### ehh.. parikk..., Temen aku mau ngomong katanya.... 
 🗣️ [Putar / Download Pesan Suara](public/music/vn2.mp3)
