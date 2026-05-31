@@ -11,7 +11,7 @@ const SplashScene = dynamic(() => import('../components/SplashScene'), { ssr: fa
 const MatrixScene = dynamic(() => import('../components/MatrixScene'), { ssr: false })
 const StarfieldScene = dynamic(() => import('../components/StarfieldScene'), { ssr: false })
 const BookScene = dynamic(() => import('../components/BookScene'), { ssr: false })
-const HeartFinale = dynamic(() => import('../components/HeartFinale'), { 
+const HeartFinale = dynamic(() => import('../components/HeartFinale'), {
   ssr: false,
   loading: () => null,
 })
@@ -59,10 +59,7 @@ function AudioController({ audioRef, onReady }) {
         audioRef.current.volume = 0.35
         audioRef.current
           .play()
-          .then(() => {
-            setPlaying(true)
-            setVisible(true)
-          })
+          .then(() => { setPlaying(true); setVisible(true) })
           .catch(() => {})
       },
       show: () => setVisible(true),
@@ -90,14 +87,17 @@ export default function Home() {
   const audioRef = useRef(null)
   const audioCtrlRef = useRef(null)
   const sceneRef = useRef(0)
+  const fadingRef = useRef(false) // ← guard spawnBurst saat transisi
 
   useEffect(() => {
     sceneRef.current = scene
   }, [scene])
 
+  // spawnBurst — skip saat fading ke HeartFinale
   useEffect(() => {
     const handler = (e) => {
       if (sceneRef.current === 1) return
+      if (fadingRef.current) return  // ← tidak spawn saat transisi
       const x = e.clientX ?? e.touches?.[0]?.clientX
       const y = e.clientY ?? e.touches?.[0]?.clientY
       if (x !== undefined) spawnBurst(x, y)
@@ -110,6 +110,7 @@ export default function Home() {
     }
   }, [])
 
+  // miniFloat hati di HeartFinale
   useEffect(() => {
     if (scene !== 4) return
     const interval = setInterval(() => {
@@ -122,6 +123,7 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [scene])
 
+  // preload HeartFinale chunk saat BookScene aktif
   useEffect(() => {
     if (renderedScene === 3) {
       import('../components/HeartFinale').catch(() => {})
@@ -130,13 +132,19 @@ export default function Home() {
 
   const goScene = useCallback((n) => {
     if (n < 0 || n >= TOTAL) return
+
     if (n === 4) {
+      fadingRef.current = true   // mulai guard
       setScene(4)
       setFadeOpacity(1)
       setTimeout(() => setRenderedScene(4), 350)
-      setTimeout(() => setFadeOpacity(0), 700)
+      setTimeout(() => {
+        setFadeOpacity(0)
+        fadingRef.current = false  // selesai guard
+      }, 700)
       return
     }
+
     triggerGlitch()
     setScene(n)
     setRenderedScene(n)
@@ -148,35 +156,29 @@ export default function Home() {
       <CursorEffect />
       <audio ref={audioRef} loop src="/music/bg.mp3" preload="auto" />
       <AudioController audioRef={audioRef} onReady={(ctrl) => { audioCtrlRef.current = ctrl }} />
+
       {scene > 1 && <NavDots total={TOTAL - 2} current={scene - 2} onGo={(i) => goScene(i + 2)} />}
+
       {renderedScene === 0 && (
-        <SplashScene
-          onEnter={() => {
-            audioCtrlRef.current?.start()
-            goScene(1)
-          }}
-        />
+        <SplashScene onEnter={() => { audioCtrlRef.current?.start(); goScene(1) }} />
       )}
       {renderedScene === 1 && <MatrixScene onDone={() => goScene(2)} />}
       {renderedScene === 2 && <StarfieldScene onDone={() => goScene(3)} />}
       {renderedScene === 3 && <BookScene onDone={() => goScene(4)} />}
       {renderedScene === 4 && <HeartFinale />}
 
-      {/* ── NEW: Fade overlay hitam — jembatan antar scene ── */}
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 99999,
-          background: '#000',
-          opacity: fadeOpacity,
-          pointerEvents: fadeOpacity > 0 ? 'all' : 'none',
-          transition: fadeOpacity === 1
-            ? 'opacity 350ms ease-in'   
-            : 'opacity 500ms ease-out', 
-          willChange: 'opacity',
-        }}
-      />
+      {/* Fade overlay hitam — jembatan antar scene */}
+      <div style={{
+        position: 'fixed', inset: 0,
+        zIndex: 99999,
+        background: '#000',
+        opacity: fadeOpacity,
+        pointerEvents: fadeOpacity > 0 ? 'all' : 'none',
+        transition: fadeOpacity === 1
+          ? 'opacity 350ms ease-in'
+          : 'opacity 500ms ease-out',
+        willChange: 'opacity',
+      }} />
 
       <style>{`
         .glitch-active::after {
