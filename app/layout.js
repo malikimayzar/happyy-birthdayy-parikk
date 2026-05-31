@@ -1,5 +1,5 @@
 import './globals.css'
-
+ 
 export const metadata = {
   title: 'Lovescape — Happy Birthday🎂',
   description: 'A special birthday surprise just for you.',
