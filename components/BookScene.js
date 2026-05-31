@@ -109,6 +109,8 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
       width: '100%', height: '100%',
       padding: '12px',
       boxSizing: 'border-box',
+      transformStyle: 'preserve-3d',
+      WebkitTransformStyle: 'preserve-3d',
     }}>
       {/* Glow border: breath pulse */}
       <div style={{
@@ -122,6 +124,10 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
           ? 'linear-gradient(135deg, #ff69b4, #c8a2c8)'
           : 'linear-gradient(135deg, rgba(255,182,217,0.6), rgba(135,206,235,0.6))',
         animation: isActive ? 'borderBreath 3s ease-in-out infinite' : 'none',
+        transformStyle: 'preserve-3d',
+        WebkitTransformStyle: 'preserve-3d',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
       }}>
         <div style={{
           width: '100%', height: '100%',
@@ -136,6 +142,10 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
           transform: isActive ? (slideIn ? 'scale(1)' : 'scale(0.94)') : 'scale(1)',
           transition: 'opacity 500ms ease-out, transform 500ms cubic-bezier(0.34,1.2,0.64,1)',
           willChange: 'transform, opacity',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          transformStyle: 'preserve-3d',
+          WebkitTransformStyle: 'preserve-3d',
         }}>
 
           {/* Gradient bawah biar teks terbaca */}
@@ -160,7 +170,6 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
                 margin: 0,
                 fontWeight: 400,
                 letterSpacing: '0.02em',
-                // Shadow hitam tebal — teks terbaca di foto apapun tanpa blur
                 textShadow: [
                   '0 1px 0 rgba(0,0,0,1)',
                   '0 2px 4px rgba(0,0,0,1)',
@@ -330,7 +339,11 @@ export default function BookScene({ onDone }) {
               longSwipesRatio={0.4}
               threshold={30}
               flipEffect={{ slideShadows: true, limitRotation: true }}
-              style={{ width: '100%', height: '100%' }}
+              style={{
+                width: '100%', height: '100%',
+                transformStyle: 'preserve-3d',
+                WebkitTransformStyle: 'preserve-3d',
+              }}
             >
               {PAGES.map((p, i) => (
                 <SwiperSlide key={i}>
