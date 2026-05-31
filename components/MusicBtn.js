@@ -1,4 +1,5 @@
 'use client'
+
 export default function MusicBtn({ playing, onToggle }) {
   return (
     <div

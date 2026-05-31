@@ -88,6 +88,7 @@ export default function SplashScene({ onEnter }) {
         className="scene splash-bg"
         style={{ zIndex: 100, cursor: 'pointer', opacity: 0, overflow: 'hidden', transform: 'translateZ(0)' }}
       >
+
         {/* Floating particles */}
         {[
           { left: '15%', size: 5, delay: 0, duration: 8 },
@@ -196,6 +197,7 @@ export default function SplashScene({ onEnter }) {
             </p>
             <div style={{ width: 40, height: 1, background: 'linear-gradient(to left, transparent, rgba(255,182,217,.6))' }} />
           </div>
+
           {/* Tap indicator */}
           <div style={{
             opacity: visible ? 1 : 0,
@@ -204,6 +206,7 @@ export default function SplashScene({ onEnter }) {
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
             marginTop: 'clamp(4px, 1.5vw, 12px)',
           }}>
+            
             {/* Teks tap */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <p style={{

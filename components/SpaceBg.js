@@ -28,8 +28,6 @@ export default function SpaceBg() {
     const draw = () => {
       ctx.clearRect(0, 0, cv.width, cv.height)
       t += 0.016
-
-      // Nebula glows
       ;[
         { x: cv.width * 0.15, y: cv.height * 0.2, r: cv.width * 0.22, c: 'rgba(120,0,200,.06)' },
         { x: cv.width * 0.8,  y: cv.height * 0.6, r: cv.width * 0.18, c: 'rgba(200,0,100,.05)' },
@@ -40,7 +38,6 @@ export default function SpaceBg() {
         ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height)
       })
 
-      // Stars
       stars.forEach(s => {
         const tw = s.base + Math.sin(t * s.speed + s.phase) * 0.35
         ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
@@ -48,7 +45,6 @@ export default function SpaceBg() {
       })
       ctx.globalAlpha = 1
 
-      // Shooting stars
       if (Math.random() < 0.005) {
         shoots.push({ x: Math.random() * cv.width, y: Math.random() * cv.height * 0.4, vx: 4 + Math.random() * 6, vy: 2 + Math.random() * 4, life: 1 })
       }
@@ -60,7 +56,6 @@ export default function SpaceBg() {
         ctx.beginPath(); ctx.moveTo(sh.x - sh.vx * 5, sh.y - sh.vy * 5); ctx.lineTo(sh.x, sh.y)
         ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.stroke()
       }
-
       raf = requestAnimationFrame(draw)
     }
     draw()

@@ -31,46 +31,6 @@ const PARTICLES = Array.from({ length: 12 }, (_, i) => ({
   color: ['#fff8dc','#ffe4e1','#e0f7ff','#ffd6fa'][i % 4],
 }))
 
-function ShimmerParticles() {
-  return (
-    <div style={{
-      position: 'absolute', inset: 0,
-      pointerEvents: 'none', zIndex: 3,
-      borderRadius: '24px', overflow: 'hidden',
-      willChange: 'transform',
-    }}>
-      {PARTICLES.map(p => (
-        <div key={p.id} style={{
-          position: 'absolute',
-          left: `${p.x}%`,
-          top: `${p.y}%`,
-          width: `${p.size}px`,
-          height: `${p.size}px`,
-          borderRadius: '50%',
-          background: p.color,
-          opacity: 0,
-          animation: `particleTwinkle ${p.dur}s ease-in-out ${p.delay}s infinite`,
-        }} />
-      ))}
-    </div>
-  )
-}
-
-function RippleOverlay({ isCover }) {
-  return (
-    <div style={{
-      position: 'absolute', inset: 0,
-      pointerEvents: 'none', zIndex: 2,
-      borderRadius: '24px',
-      background: `radial-gradient(ellipse 70% 50% at 35% 65%,
-        rgba(255,255,255,${isCover ? 0.06 : 0.03}) 0%,
-        transparent 65%)`,
-      animation: 'rippleDrift1 8s ease-in-out infinite alternate',
-      willChange: 'opacity',
-    }} />
-  )
-}
-
 function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }) {
   const [displayed, setDisplayed] = useState('')
   const [done, setDone] = useState(false)

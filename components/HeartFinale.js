@@ -85,7 +85,6 @@ function launchConfetti(canvas) {
   canvas.style.width = `${window.innerWidth}px`
   canvas.style.height = `${window.innerHeight}px`
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-  // kurangi partikel 120 → 60 di HP
   const count = window.innerWidth < 768 ? 60 : 120
   const parts = Array.from({ length: count }, () => ({
     x: window.innerWidth * 0.5 + (Math.random() - 0.5) * 100,
@@ -148,14 +147,11 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
   const [hovered, setHovered] = useState(false)
   const organicRotate = rotate + ORGANIC_ROTATIONS[index % ORGANIC_ROTATIONS.length]
 
-  // plasPop dipanggil saat card visible, bukan saat mount
   useEffect(() => {
     if (!visible) return
     const id = setTimeout(plasPop, 60)
     return () => clearTimeout(id)
   }, [visible])
-
-  // Tidak render sama sekali sebelum visible — hemat DOM
   if (!visible) return null
 
   return (
@@ -230,15 +226,12 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
 export default function HeartFinale() {
   const [titleVisible, setTitleVisible] = useState(false)
   const [isBeating, setIsBeating] = useState(false)
-  // ── BATCH RENDER: mulai dari 0, tambah 4 card tiap 120ms ──
   const [visibleCount, setVisibleCount] = useState(0)
   const confettiRef = useRef(null)
   const targetPos = useMemo(() => heartPositions(PHOTOS.length), [])
   const { container: containerSize, card: cardSize } = useHeartSize()
 
   useEffect(() => {
-    // Batch render: 4 card per tick, interval 120ms
-    // Total: 24 card = 6 batch = ~720ms
     const BATCH = 4
     const INTERVAL = 120
     let count = 0
@@ -247,8 +240,7 @@ export default function HeartFinale() {
       setVisibleCount(Math.min(count, PHOTOS.length))
       if (count >= PHOTOS.length) clearInterval(interval)
     }, INTERVAL)
-
-    // Title muncul setelah semua card visible
+  
     const allDone = (PHOTOS.length / BATCH) * INTERVAL + 300
     const t1 = setTimeout(() => setTitleVisible(true), allDone)
     const t2 = setTimeout(() => launchConfetti(confettiRef.current), allDone + 400)
@@ -315,7 +307,7 @@ export default function HeartFinale() {
             ].join(', '),
             animation: titleVisible ? 'subtlePulse 5s ease-in-out infinite' : 'none',
           }}>
-            Happy Birthday Silmisyuu
+            Happy Birthday Silmisyuuu
           </p>
         </div>
 
