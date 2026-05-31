@@ -7,7 +7,9 @@ export default function SplashScene({ onEnter }) {
   const trailRef = useRef(null)
   const [stars, setStars] = useState([])
   const [visible, setVisible] = useState(false)
+  const [displayedText, setDisplayedText] = useState('')
   let lastTrail = useRef(0)
+  const fullText = 'For Silmisyu'
 
   useEffect(() => {
     setStars(Array.from({ length: 60 }, (_, i) => ({
@@ -46,6 +48,22 @@ export default function SplashScene({ onEnter }) {
     return () => window.removeEventListener('mousemove', move)
   }, [])
 
+  useEffect(() => {
+    if (!visible) return
+    
+    let index = 0
+    const interval = setInterval(() => {
+      if (index < fullText.length) {
+        setDisplayedText(fullText.slice(0, index + 1))
+        index++
+      } else {
+        clearInterval(interval)
+      }
+    }, 80)
+    
+    return () => clearInterval(interval)
+  }, [visible, fullText])
+
   const handleClick = () => {
     const el = containerRef.current
     if (!el) return
@@ -68,8 +86,35 @@ export default function SplashScene({ onEnter }) {
         ref={containerRef}
         onClick={handleClick}
         className="scene splash-bg"
-        style={{ zIndex: 100, cursor: 'pointer', opacity: 0, overflow: 'hidden' }}
+        style={{ zIndex: 100, cursor: 'pointer', opacity: 0, overflow: 'hidden', transform: 'translateZ(0)' }}
       >
+        {/* Floating particles */}
+        {[
+          { left: '15%', size: 5, delay: 0, duration: 8 },
+          { left: '35%', size: 6, delay: 1.2, duration: 10 },
+          { left: '55%', size: 4, delay: 0.5, duration: 9 },
+          { left: '75%', size: 7, delay: 2.1, duration: 11 },
+          { left: '25%', size: 5, delay: 1.8, duration: 12 },
+          { left: '65%', size: 6, delay: 0.8, duration: 8.5 },
+        ].map((p, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: p.left,
+              bottom: '-20px',
+              width: p.size + 'px',
+              height: p.size + 'px',
+              borderRadius: '50%',
+              background: i % 2 === 0 ? 'rgba(255,105,180,0.35)' : 'rgba(200,100,200,0.35)',
+              pointerEvents: 'none',
+              animation: `floatUp ${p.duration}s ease-in infinite`,
+              animationDelay: p.delay + 's',
+              willChange: 'transform, opacity',
+              zIndex: 2,
+            }}
+          />
+        ))}
         {stars.map(s => (
           <div key={s.id} className="star" style={{
             left: s.x + '%', top: s.y + '%',
@@ -113,10 +158,13 @@ export default function SplashScene({ onEnter }) {
             }}>
               I Hope You Like<br />
               <span style={{
-                background: 'linear-gradient(135deg, #fff 30%, #ffb6d9 60%, #ff69b4 100%)',
+                background: 'linear-gradient(90deg, #fff 0%, #ffb6d9 25%, #ff69b4 50%, #ffb6d9 75%, #fff 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 3.5s ease-in-out infinite',
+                willChange: 'background-position',
               }}>
                 This Little Something
               </span>
@@ -126,11 +174,15 @@ export default function SplashScene({ onEnter }) {
           {/* Subtitle */}
           <div style={{
             opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(14px)',
+            transform: visible ? 'translateY(0) translateZ(0)' : 'translateY(14px) translateZ(0)',
             transition: 'all 0.9s ease 0.45s',
-            display: 'flex', alignItems: 'center', gap: 10,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+            width: '100%',
           }}>
-            <div style={{ width: 32, height: 1, background: 'linear-gradient(to right, transparent, rgba(255,182,217,.6))' }} />
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(to right, transparent, rgba(255,182,217,.6))' }} />
             <p style={{
               color: '#ffb6d9',
               textShadow: '0 0 12px rgba(255,105,180,.6)',
@@ -138,54 +190,39 @@ export default function SplashScene({ onEnter }) {
               fontSize: 'clamp(14px, 3vw, 20px)',
               letterSpacing: '.1em',
               margin: 0,
+              whiteSpace: 'nowrap',
             }}>
-              For Silmisyu
+              {displayedText}
             </p>
-            <div style={{ width: 32, height: 1, background: 'linear-gradient(to left, transparent, rgba(255,182,217,.6))' }} />
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(to left, transparent, rgba(255,182,217,.6))' }} />
           </div>
-
           {/* Tap indicator */}
           <div style={{
             opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(14px)',
+            transform: visible ? 'translateY(0) translateZ(0)' : 'translateY(14px) translateZ(0)',
             transition: 'all 0.9s ease 0.65s',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
             marginTop: 'clamp(4px, 1.5vw, 12px)',
           }}>
-
-            {/* Ring animasi + icon */}
-            <div style={{ position: 'relative', width: 88, height: 88, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {[0, .7, 1.4].map((d, i) => (
-                <div key={i} className="tap-ring" style={{ position: 'absolute', animationDelay: d + 's' }} />
-              ))}
-
-              {/* Glow circle di belakang emoji */}
-              <div style={{
-                position: 'absolute', width: 52, height: 52, borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(255,105,180,.3), transparent 70%)',
-                animation: 'ambientPulse 2.5s ease-in-out infinite',
-              }} />
-              <span style={{ fontSize: 34, position: 'relative', zIndex: 2, filter: 'drop-shadow(0 0 8px rgba(255,105,180,.8))' }}>🌸</span>
-            </div>
-
             {/* Teks tap */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <p style={{
-                color: 'rgba(255,255,255,.9)',
+                color: '#ffe0f0',
                 textShadow: '0 0 16px #ff69b4, 0 0 32px rgba(255,20,147,.5)',
-                animation: 'pulse-tap 1.8s ease-in-out infinite',
+                animation: 'breathe 3s ease-in-out infinite',
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: 'clamp(9px, 1.8vw, 11px)',
-                letterSpacing: '.35em',
+                letterSpacing: '0.25em',
                 textTransform: 'uppercase',
                 margin: 0,
+                willChange: 'opacity, transform',
               }}>
                 Tap anywhere to begin
               </p>
               
               {/* Arrow kecil bounce */}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,105,180,.6)" strokeWidth="2" strokeLinecap="round"
-                style={{ animation: 'arrowBounce 1.6s ease-in-out infinite', marginTop: 2 }}>
+                style={{ animation: 'bounce 1.8s ease-in-out infinite', marginTop: 2, willChange: 'opacity, transform' }}>
                 <path d="M12 5v14M5 12l7 7 7-7"/>
               </svg>
             </div>
@@ -205,6 +242,41 @@ export default function SplashScene({ onEnter }) {
         @keyframes arrowBounce {
           0%, 100% { transform: translateY(0); opacity: .6; }
           50% { transform: translateY(5px); opacity: 1; }
+        }
+        @keyframes shimmer {
+          0% { background-position: 200% center; }
+          50% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes breathe {
+          0%, 100% { opacity: 0.4; letter-spacing: 0.2em; }
+          50% { opacity: 1; letter-spacing: 0.3em; }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0px); opacity: 0.6; }
+          50% { transform: translateY(6px); opacity: 1; }
+        }
+        @keyframes floatUp {
+          0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0.35;
+          }
+          10% {
+            opacity: 0.45;
+          }
+          90% {
+            opacity: 0.1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(calc((Math.random() - 0.5) * 60px));
+            opacity: 0;
+          }
+        }
+        @keyframes sparkleTrail {
+          to {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
         }
       `}</style>
     </>

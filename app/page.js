@@ -87,17 +87,16 @@ export default function Home() {
   const audioRef = useRef(null)
   const audioCtrlRef = useRef(null)
   const sceneRef = useRef(0)
-  const fadingRef = useRef(false) // ← guard spawnBurst saat transisi
+  const fadingRef = useRef(false) 
 
   useEffect(() => {
     sceneRef.current = scene
   }, [scene])
 
-  // spawnBurst — skip saat fading ke HeartFinale
   useEffect(() => {
     const handler = (e) => {
       if (sceneRef.current === 1) return
-      if (fadingRef.current) return  // ← tidak spawn saat transisi
+      if (fadingRef.current) return 
       const x = e.clientX ?? e.touches?.[0]?.clientX
       const y = e.clientY ?? e.touches?.[0]?.clientY
       if (x !== undefined) spawnBurst(x, y)
@@ -110,7 +109,6 @@ export default function Home() {
     }
   }, [])
 
-  // miniFloat hati di HeartFinale
   useEffect(() => {
     if (scene !== 4) return
     const interval = setInterval(() => {
@@ -123,7 +121,6 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [scene])
 
-  // preload HeartFinale chunk saat BookScene aktif
   useEffect(() => {
     if (renderedScene === 3) {
       import('../components/HeartFinale').catch(() => {})
@@ -134,13 +131,13 @@ export default function Home() {
     if (n < 0 || n >= TOTAL) return
 
     if (n === 4) {
-      fadingRef.current = true   // mulai guard
+      fadingRef.current = true   
       setScene(4)
       setFadeOpacity(1)
       setTimeout(() => setRenderedScene(4), 350)
       setTimeout(() => {
         setFadeOpacity(0)
-        fadingRef.current = false  // selesai guard
+        fadingRef.current = false 
       }, 700)
       return
     }

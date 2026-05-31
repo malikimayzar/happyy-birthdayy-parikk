@@ -128,11 +128,11 @@ export default function MatrixScene({ onDone }) {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = window.innerWidth
       height = window.innerHeight
-      fontSize = Math.max(11, Math.min(14, Math.floor(width / 38)))
+      fontSize = Math.max(14, Math.min(18, Math.floor(width / 28)))
 
       const colSpacing = fontSize * 0.42
       const baseColCount = Math.ceil(width / colSpacing) + 6
-      const cols = isCountdownPhase ? Math.max(8, Math.floor(baseColCount * 0.3)) : Math.floor(baseColCount * 0.6)
+      const cols = isCountdownPhase ? Math.max(8, Math.floor(baseColCount * 0.3)) : Math.floor(baseColCount * 0.9)
       const adjustedSpacing = width / cols
 
       canvas.width = Math.floor(width * dpr)
@@ -150,7 +150,7 @@ export default function MatrixScene({ onDone }) {
 
       drops = Array.from({ length: cols }, (_, i) => ({
         y: Math.random() > 0.4 ? Math.random() * -height * 1.5 : Math.random() * height * 0.5,
-        speed: fontSize * (0.85 + Math.random() * 1.65),
+        speed: fontSize * (0.45 + Math.random() * 0.9),
         length: Math.floor(height / fontSize * (0.6 + Math.random() * 0.4)),
         x: i * adjustedSpacing,
         chars: Array.from({ length: 60 }, () => HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)]),
@@ -265,7 +265,7 @@ export default function MatrixScene({ onDone }) {
     const drawRain = () => {
       ctx.shadowBlur = 0
       ctx.shadowColor = 'transparent'
-      ctx.font = `900 ${fontSize}px monospace`
+      ctx.font = `900 ${fontSize + 3}px monospace`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'top'
       drops.forEach(drop => {
@@ -287,7 +287,7 @@ export default function MatrixScene({ onDone }) {
         drop.y += drop.speed
         if (drop.y - drop.length * fontSize > height) {
           drop.y = -fontSize * (0.5 + Math.random() * 5)
-          drop.speed = fontSize * (0.85 + Math.random() * 1.65)
+          drop.speed = fontSize * (0.45 + Math.random() * 0.9)
           drop.length = Math.floor(height / fontSize * (0.6 + Math.random() * 0.4))
         }
       })
