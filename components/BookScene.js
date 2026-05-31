@@ -111,6 +111,9 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
       boxSizing: 'border-box',
       transformStyle: 'preserve-3d',
       WebkitTransformStyle: 'preserve-3d',
+      willChange: 'transform',
+      transform: 'translateZ(0)',
+      WebkitTransform: 'translateZ(0)',
     }}>
       {/* Glow border: breath pulse */}
       <div style={{
@@ -147,6 +150,8 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
           WebkitBackfaceVisibility: 'hidden',
           transformStyle: 'preserve-3d',
           WebkitTransformStyle: 'preserve-3d',
+          WebkitMaskImage: '-webkit-radial-gradient(circle, white, black)',
+          maskImage: 'radial-gradient(circle, white, black)',
         }}>
 
           {/* Gradient bawah biar teks terbaca */}
@@ -273,6 +278,9 @@ export default function BookScene({ onDone }) {
           -webkit-transform-style: preserve-3d;
           overflow: visible !important;
           -webkit-overflow-scrolling: auto;
+          will-change: transform;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
         .swiper-wrapper {
           overflow: visible !important;
@@ -351,8 +359,6 @@ export default function BookScene({ onDone }) {
               flipEffect={{ slideShadows: true, limitRotation: true }}
               style={{
                 width: '100%', height: '100%',
-                transformStyle: 'preserve-3d',
-                WebkitTransformStyle: 'preserve-3d',
               }}
             >
               {PAGES.map((p, i) => (
