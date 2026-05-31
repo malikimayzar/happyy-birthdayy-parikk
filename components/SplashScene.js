@@ -222,12 +222,6 @@ export default function SplashScene({ onEnter }) {
               }}>
                 Tap anywhere to begin
               </p>
-              
-              {/* Arrow kecil bounce */}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,105,180,.6)" strokeWidth="2" strokeLinecap="round"
-                style={{ animation: 'bounce 1.8s ease-in-out infinite', marginTop: 2, willChange: 'opacity, transform' }}>
-                <path d="M12 5v14M5 12l7 7 7-7"/>
-              </svg>
             </div>
           </div>
         </div>
