@@ -131,7 +131,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
       }}>
         <div style={{
           width: '100%', height: '100%',
-          position: 'relative', overflow: 'hidden',
+          position: 'relative', overflow: 'visible',
           borderRadius: '24px',
           background: '#111',
           backgroundImage: `url(${photo})`,
@@ -139,7 +139,8 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
           backgroundPosition: 'center',
           boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
           opacity: isActive ? (slideIn ? 1 : 0) : 1,
-          transform: isActive ? (slideIn ? 'scale(1)' : 'scale(0.94)') : 'scale(1)',
+          transform: isActive ? (slideIn ? 'scale(1) translateZ(1px)' : 'scale(0.94) translateZ(1px)') : 'scale(1) translateZ(1px)',
+          WebkitTransform: isActive ? (slideIn ? 'scale(1) translateZ(1px)' : 'scale(0.94) translateZ(1px)') : 'scale(1) translateZ(1px)',
           transition: 'opacity 500ms ease-out, transform 500ms cubic-bezier(0.34,1.2,0.64,1)',
           willChange: 'transform, opacity',
           backfaceVisibility: 'hidden',
@@ -267,6 +268,15 @@ export default function BookScene({ onDone }) {
   return (
     <>
       <style>{`
+        .swiper-slide {
+          transform-style: preserve-3d;
+          -webkit-transform-style: preserve-3d;
+          overflow: visible !important;
+          -webkit-overflow-scrolling: auto;
+        }
+        .swiper-wrapper {
+          overflow: visible !important;
+        }
         @keyframes coverFloat {
           0%, 100% { transform: translateY(0px); }
           50%       { transform: translateY(-8px); }
