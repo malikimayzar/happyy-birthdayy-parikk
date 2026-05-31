@@ -1,53 +1,122 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
-const CHARS = ['♥', '♥', '♡', '❣', '✦', '•']
-const WORDS = ['HAPPY', 'BIRTHDAY', 'TO', 'Farikha', '🎂']
-const RAIN_COLORS = ['#ff69b4', '#e0006f', '#9b0050', '#3a001a']
+const HEART_CHARS = ['♥', '♡', '❤', '✦', '✧', '◆', '◇', '★', '✿', '❋', '•', '·']
+const WORDS = ['HAPPY', 'BIRTHDAY', 'TO', 'Farikha']
+const RAIN_COLORS = ['#ff69b4', '#e0006f', '#9b0050', '#ff1493', '#c2185b']
 
-function playSfx() {
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)()
-    const oscillator = ac.createOscillator()
-    const gain = ac.createGain()
-    const now = ac.currentTime
-    oscillator.connect(gain)
-    gain.connect(ac.destination)
-    oscillator.type = 'sine'
-    oscillator.frequency.setValueAtTime(740, now)
-    oscillator.frequency.exponentialRampToValueAtTime(360, now + 0.12)
-    gain.gain.setValueAtTime(0.14, now)
-    gain.gain.linearRampToValueAtTime(0, now + 0.16)
-    oscillator.start(now)
-    oscillator.stop(now + 0.16)
-  } catch (e) {}
+function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t }
+function easeIn(t) { return t * t * t }
+
+function sampleFromCanvas(offCanvas, stepSize) {
+  const { width: w, height: h } = offCanvas
+  const { data } = offCanvas.getContext('2d').getImageData(0, 0, w, h)
+  const pts = []
+  for (let py = 0; py < h; py += stepSize)
+    for (let px = 0; px < w; px += stepSize)
+      if (data[(py * w + px) * 4 + 3] > 100)
+        pts.push({ dx: px - w / 2, dy: py - h / 2 })
+  return pts
+}
+
+function sampleText(text, canvasWidth, canvasHeight, isCountdown) {
+  const off = document.createElement('canvas')
+  off.width = canvasWidth
+  off.height = canvasHeight
+  const c = off.getContext('2d')
+  const maxWidth = canvasWidth * 0.88 
+
+  let fontSize = isCountdown 
+    ? Math.min(canvasWidth * 0.45, canvasHeight * 0.4)  
+    : Math.min(canvasWidth * 0.35, canvasHeight * 0.3)
+
+  c.font = `900 ${fontSize}px "Arial Black", Impact, sans-serif`
+  while (c.measureText(text).width > maxWidth && fontSize > 20) {
+    fontSize -= 2
+    c.font = `900 ${fontSize}px "Arial Black", Impact, sans-serif`
+  }
+
+  c.textAlign = 'center'
+  c.textBaseline = 'middle'
+  c.fillStyle = '#fff'
+  c.fillText(text, canvasWidth / 2, canvasHeight / 2)
+  const step = canvasWidth < 600 ? 4 : 6
+  return sampleFromCanvas(off, step)
+}
+
+function sampleHeart(canvasWidth, canvasHeight) {
+  const off = document.createElement('canvas')
+  off.width = canvasWidth
+  off.height = canvasHeight
+  const c = off.getContext('2d')
+  const cx = canvasWidth / 2, cy = canvasHeight / 2
+  const minDim = Math.min(canvasWidth, canvasHeight)
+  const s = minDim * 0.022
+
+  c.fillStyle = '#fff'
+  c.beginPath()
+  for (let i = 0; i <= 360; i++) {
+    const t = (i * Math.PI) / 180
+    const x = cx + s * 16 * Math.pow(Math.sin(t), 3)
+    const y = cy - s * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t))
+    i === 0 ? c.moveTo(x, y) : c.lineTo(x, y)
+  }
+  c.closePath()
+  c.fill()
+  const step = canvasWidth < 600 ? 4 : canvasWidth < 1024 ? 5 : 6
+  return sampleFromCanvas(off, step)
+}
+
+function matchParticles(src, dst) {
+  const result = []
+  const srcLen = src.length
+  const dstLen = dst.length
+  const maxLen = Math.max(srcLen, dstLen)
+  for (let i = 0; i < maxLen; i++) {
+    const from = src[i % srcLen]
+    const to = dst[i % dstLen]
+    result.push({
+      fromDx: from.dx,
+      fromDy: from.dy,
+      toDx: to.dx + (Math.random() - 0.5) * 2,
+      toDy: to.dy + (Math.random() - 0.5) * 2,
+    })
+  }
+  return result
 }
 
 export default function MatrixScene({ onDone }) {
   const canvasRef = useRef(null)
   const rafRef = useRef(null)
   const timersRef = useRef([])
-  const dropsRef = useRef([])
-  const [ui, setUi] = useState({
-    phase: 'matrix',
-    countNum: null,
-    countAnim: 'in',
-    wordIdx: -1,
-    wordAnim: 'in',
-  })
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-
     const ctx = canvas.getContext('2d')
     let running = true
-    let width = 0
-    let height = 0
-    let dpr = 1
-    let fontSize = 13
-    let cols = 0
+    let width = 0, height = 0, dpr = 1, fontSize = 12
+    let drops = []
+    let cachedGrd = null
+    let bursts = []
+
+    let morphPts = []
+    let morphT = 1
+    let morphing = false
+    let morphStart = 0
+    let morphDone = null
+    let currentPts = []
+    let presampled = null
+    let isCountdownPhase = false
+
+    const MORPH_MS   = 280
+    const HOLD_COUNT = 1800
+    const HOLD_WORD  = 2400
+    const HOLD_LAST  = 2800
+    const HOLD_HEART = 2500
+
+    let pSize = 2.0 
 
     const addTimer = (fn, ms) => {
       const id = setTimeout(fn, ms)
@@ -59,133 +128,223 @@ export default function MatrixScene({ onDone }) {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = window.innerWidth
       height = window.innerHeight
-      fontSize = Math.max(13, Math.min(17, Math.floor(width / 40)))
-      const colSpacing = fontSize * 0.55
-      cols = Math.ceil(width / colSpacing) + 2
+      fontSize = Math.max(11, Math.min(14, Math.floor(width / 38)))
+
+      const colSpacing = fontSize * 0.42
+      const baseColCount = Math.ceil(width / colSpacing) + 6
+      const cols = isCountdownPhase ? Math.max(8, Math.floor(baseColCount * 0.3)) : Math.floor(baseColCount * 0.6)
+      const adjustedSpacing = width / cols
 
       canvas.width = Math.floor(width * dpr)
       canvas.height = Math.floor(height * dpr)
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-
-      ctx.fillStyle = '#000000'
+      
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0) 
+      ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, width, height)
 
-      dropsRef.current = Array.from({ length: cols }, (_, i) => ({
-        // FIX: sebagian kolom mulai dari atas langsung, sebagian dari atas layar
-        y: Math.random() > 0.5
-          ? Math.random() * -height       
-          : Math.random() * height * 0.3, // sebagian sudah di tengah saat load
-        speed: fontSize * (0.25 + Math.random() * 0.45), // kecepatan bervariasi = kesan rintik
-        // FIX: trail jauh lebih panjang = menjuntai seperti referensi
-        length: Math.floor(height / fontSize * (0.45 + Math.random() * 0.55)),
-        colSpacing,
-        x: i * colSpacing,
+      cachedGrd = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width*0.5)
+      cachedGrd.addColorStop(0, 'rgba(160,0,70,0.07)')
+      cachedGrd.addColorStop(1, 'rgba(0,0,0,0)')
+
+      drops = Array.from({ length: cols }, (_, i) => ({
+        y: Math.random() > 0.4 ? Math.random() * -height * 1.5 : Math.random() * height * 0.5,
+        speed: fontSize * (0.85 + Math.random() * 1.65),
+        length: Math.floor(height / fontSize * (0.6 + Math.random() * 0.4)),
+        x: i * adjustedSpacing,
+        chars: Array.from({ length: 60 }, () => HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)]),
+        charTick: 0,
       }))
+
+      pSize = width < 600 ? 1.3 : 2.5
+      presampled = {
+        countdown: {
+          3: sampleText('3', width, height, true),
+          2: sampleText('2', width, height, true),
+          1: sampleText('1', width, height, true),
+        },
+        words: WORDS.map(w => sampleText(w, width, height, false)),
+        heart: sampleHeart(width, height),
+      }
+    }
+
+    const spawnBurst = () => {
+      const count = 28
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i / count) + (Math.random() - 0.5) * 0.3
+        const speed = 55 + Math.random() * 85
+        bursts.push({
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 1.4 + Math.random() * 1.8,
+          born: performance.now(),
+          life: 320 + Math.random() * 120,
+        })
+      }
+    }
+
+    const morphTo = (nextPts, holdMs, cb) => {
+      if (!nextPts) return;
+      morphPts = matchParticles(currentPts.length ? currentPts : nextPts, nextPts)
+      morphing = true
+      morphT = 0
+      morphStart = performance.now()
+      morphDone = () => {
+        currentPts = nextPts
+        spawnBurst()
+        addTimer(cb, holdMs)
+      }
+    }
+
+    const drawBursts = (now) => {
+      bursts = bursts.filter(b => {
+        const age = now - b.born
+        if (age > b.life) return false
+        const t = age / b.life
+        const alpha = 1 - easeIn(t)
+        const cx = width / 2, cy = height / 2
+        ctx.globalAlpha = alpha * 0.85
+        ctx.shadowBlur = 5
+        ctx.shadowColor = '#ff66b2'
+        ctx.fillStyle = '#ff66b2'
+        ctx.beginPath()
+        ctx.arc(cx + b.vx * t * 0.5, cy + b.vy * t * 0.5, b.size * (1 - t * 0.4), 0, Math.PI * 2)
+        ctx.fill()
+        return true
+      })
+      ctx.globalAlpha = 1; ctx.shadowBlur = 0
+    }
+
+    const drawParticles = (now) => {
+      const cx = width / 2, cy = height / 2
+
+      if (morphing) {
+        const elapsed = now - morphStart
+        const t = Math.min(1, elapsed / MORPH_MS)
+        morphT = easeInOut(t)
+
+        if (t >= 1) {
+          morphing = false
+          morphDone?.()
+          morphDone = null
+        }
+
+        const pulse = 0.92 + 0.08 * Math.sin(now / 120)
+        const shadowFade = t < 0.15 ? (1 - t / 0.15) : 0
+        const shadowIntensity = (isCountdownPhase ? 8 : 18) * shadowFade
+        ctx.shadowBlur = shadowIntensity > 0.1 ? shadowIntensity : 0
+        ctx.shadowColor = shadowFade > 0 ? '#ff007f' : 'transparent'
+        ctx.fillStyle = '#ffccee'
+        ctx.globalAlpha = pulse * 0.9
+        ctx.beginPath()
+        morphPts.forEach(p => {
+          const x = p.fromDx + (p.toDx - p.fromDx) * morphT
+          const y = p.fromDy + (p.toDy - p.fromDy) * morphT
+          ctx.moveTo(cx + x + pSize, cy + y)
+          ctx.arc(cx + x, cy + y, pSize, 0, Math.PI * 2)
+        })
+        ctx.fill()
+        ctx.globalAlpha = 1; ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'
+
+      } else if (currentPts.length) {
+        const pulse = 0.94 + 0.06 * Math.sin(now / 140)
+        ctx.shadowBlur = 0
+        ctx.shadowColor = 'transparent'
+        ctx.fillStyle = '#ffccee'
+        ctx.globalAlpha = pulse * 0.9
+        ctx.beginPath()
+        currentPts.forEach(p => {
+        ctx.fillRect(cx + p.dx - pSize, cy + p.dy - pSize, pSize * 2, pSize * 2)
+        })
+        ctx.fill()
+        ctx.globalAlpha = 1; ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'
+      }
+    }
+
+    const drawRain = () => {
+      ctx.shadowBlur = 0
+      ctx.shadowColor = 'transparent'
+      ctx.font = `900 ${fontSize}px monospace`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'top'
+      drops.forEach(drop => {
+        drop.charTick++
+        if (drop.charTick % 8 === 0)
+          drop.chars[0] = HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)]
+        for (let j = 0; j < drop.length; j++) {
+          const y = drop.y - j * fontSize
+          if (y < -fontSize || y > height + fontSize) continue
+          const ratio = j / drop.length
+          ctx.globalAlpha = j === 0 ? 1 : Math.max(0.03, 1 - ratio * 1.1)
+          if (j === 0) { ctx.fillStyle = '#ffe0f0' }
+          else if (ratio < 0.12) { ctx.fillStyle = '#ffb3d9' }
+          else if (ratio < 0.3) { ctx.fillStyle = RAIN_COLORS[0] }
+          else if (ratio < 0.6) { ctx.fillStyle = RAIN_COLORS[1] }
+          else { ctx.fillStyle = RAIN_COLORS[2] }
+          ctx.fillText(drop.chars[(j + drop.charTick) % drop.chars.length], drop.x, y)
+        }
+        drop.y += drop.speed
+        if (drop.y - drop.length * fontSize > height) {
+          drop.y = -fontSize * (0.5 + Math.random() * 5)
+          drop.speed = fontSize * (0.85 + Math.random() * 1.65)
+          drop.length = Math.floor(height / fontSize * (0.6 + Math.random() * 0.4))
+        }
+      })
+      ctx.globalAlpha = 1; ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'
     }
 
     const draw = () => {
       if (!running) return
-
-      // FIX: fade lebih ringan (0.08) = trail lebih panjang terlihat
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'
+      const now = performance.now()
+      ctx.fillStyle = 'rgba(0,0,0,0.055)'
       ctx.fillRect(0, 0, width, height)
-
-      ctx.font = `900 ${fontSize}px "Share Tech Mono", monospace`
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'top'
-
-      dropsRef.current.forEach((drop) => {
-        for (let j = 0; j < drop.length; j++) {
-          const y = drop.y - j * fontSize
-          if (y < -fontSize || y > height + fontSize) continue
-
-          const head = j === 0
-          const ratio = j / drop.length
-
-          ctx.globalAlpha = head ? 1 : Math.max(0.04, 1 - ratio * 1.05)
-
-          if (head) {
-            // Ujung: putih-pink terang dengan glow
-            ctx.fillStyle = '#ffe0f0'
-            ctx.shadowBlur = 10
-            ctx.shadowColor = '#ff69b4'
-          } else if (ratio < 0.15) {
-            ctx.fillStyle = '#ffb3d9'
-            ctx.shadowBlur = 6
-            ctx.shadowColor = '#ff007f'
-          } else if (ratio < 0.35) {
-            ctx.fillStyle = RAIN_COLORS[0]
-            ctx.shadowBlur = 3
-            ctx.shadowColor = '#c7006a'
-          } else if (ratio < 0.65) {
-            ctx.fillStyle = RAIN_COLORS[1]
-            ctx.shadowBlur = 1
-            ctx.shadowColor = '#8b0045'
-          } else {
-            // FIX: ekor bawah makin pudar ke gelap = kesan rintik menghilang
-            ctx.fillStyle = RAIN_COLORS[2]
-            ctx.shadowBlur = 0
-            ctx.shadowColor = 'transparent'
-          }
-
-          ctx.fillText(
-            CHARS[Math.floor(Math.random() * CHARS.length)],
-            drop.x,
-            y
-          )
-        }
-
-        ctx.shadowBlur = 0
-        drop.y += drop.speed
-
-        // FIX: reset lebih cepat dan variatif = tidak ada jeda kosong
-        if (drop.y - drop.length * fontSize > height) {
-          if (Math.random() > 0.72) {
-            drop.y = -fontSize * (2 + Math.random() * 8)
-            drop.speed = fontSize * (0.55 + Math.random() * 0.9)
-            drop.length = Math.floor(height / fontSize * (0.45 + Math.random() * 0.55))
-          }
-        }
-      })
-
       ctx.globalAlpha = 1
+      ctx.shadowBlur = 0
+      ctx.shadowColor = 'transparent'
+      
+      if (cachedGrd) { ctx.fillStyle = cachedGrd; ctx.fillRect(0, 0, width, height) }
+      drawRain()
+      drawParticles(now)
+      drawBursts(now)
       rafRef.current = requestAnimationFrame(draw)
     }
 
     const runWords = (idx) => {
-      setUi({ phase: 'words', countNum: null, countAnim: 'in', wordIdx: idx, wordAnim: 'in' })
-      addTimer(() => {
-        setUi((current) => ({ ...current, wordAnim: 'out' }))
-        addTimer(() => {
-          if (idx < WORDS.length - 1) {
-            runWords(idx + 1)
-            return
-          }
-          running = false
-          canvas.style.opacity = '0'
-          addTimer(() => onDone?.(), 850)
-        }, 420)
-      }, idx === WORDS.length - 1 ? 1900 : 1200)
+      if (!presampled) return;
+      isCountdownPhase = false
+      const hold = idx === WORDS.length - 1 ? HOLD_LAST : HOLD_WORD
+      morphTo(presampled.words[idx], hold, () => {
+        if (idx < WORDS.length - 1) {
+          runWords(idx + 1)
+        } else {
+          morphTo(presampled.heart, HOLD_HEART, () => {
+            running = false
+            canvas.style.transition = 'opacity 1.2s ease'
+            canvas.style.opacity = '0'
+            addTimer(() => onDone?.(), 1200)
+          })
+        }
+      })
     }
 
     const runCountdown = (num) => {
-      playSfx()
-      setUi({ phase: 'countdown', countNum: num, countAnim: 'in', wordIdx: -1, wordAnim: 'in' })
-      addTimer(() => {
-        setUi((current) => ({ ...current, countAnim: 'out' }))
-        addTimer(() => {
-          if (num > 1) runCountdown(num - 1)
-          else runWords(0)
-        }, 420)
-      }, 980)
+      if (!presampled) return;
+      isCountdownPhase = true
+      morphTo(presampled.countdown[num], HOLD_COUNT, () => {
+        if (num > 1) runCountdown(num - 1)
+        else runWords(0)
+      })
     }
 
-    resize()
-    draw()
-    window.addEventListener('resize', resize)
-    addTimer(() => runCountdown(3), 1800)
+    document.fonts.ready.then(() => {
+      if (!running) return;
+
+      resize() 
+      draw()
+      window.addEventListener('resize', resize)
+      addTimer(() => runCountdown(3), 1600)
+    })
 
     return () => {
       running = false
@@ -196,80 +355,21 @@ export default function MatrixScene({ onDone }) {
     }
   }, [onDone])
 
-  const activeText = ui.phase === 'countdown' ? ui.countNum : WORDS[ui.wordIdx]
-  const animationName = ui.phase === 'countdown'
-    ? ui.countAnim === 'in' ? 'matrixCountIn' : 'matrixCountOut'
-    : ui.wordAnim === 'in' ? 'matrixWordIn' : 'matrixWordOut'
-
   return (
-    <div className="scene" style={{ zIndex: 10, background: '#000000' }}>
+    <div className="scene w-screen h-screen fixed inset-0 overflow-hidden bg-black" style={{ zIndex: 10 }}>
       <canvas
         ref={canvasRef}
         style={{
-          position: 'fixed',
-          inset: 0,
+          position: 'fixed', 
+          inset: 0, 
           zIndex: 2,
-          display: 'block',
+          display: 'block', 
           opacity: 1,
-          transition: 'opacity 0.8s ease',
+          transition: 'opacity 0.9s ease',
+          width: '100vw',
+          height: '100vh',
         }}
       />
-
-      {activeText && (
-        <div
-          key={`${ui.phase}-${activeText}-${animationName}`}
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 20,
-            width: '100%',
-            padding: '0 18px',
-            textAlign: 'center',
-            pointerEvents: 'none',
-          }}
-        >
-          <div
-            style={{
-              color: '#ff66b2',
-              fontFamily: 'Impact, "Share Tech Mono", monospace',
-              fontSize: ui.phase === 'countdown'
-                ? 'clamp(112px, 30vw, 260px)'
-                : 'clamp(44px, 12vw, 132px)',
-              fontWeight: 900,
-              lineHeight: 0.92,
-              letterSpacing: ui.phase === 'countdown' ? 0 : '0.04em',
-              textShadow: '0 0 12px #ff007f, 0 0 25px #ff007f',
-              animation: `${animationName} ${ui.phase === 'countdown' ? '0.5s' : '0.56s'} cubic-bezier(.22,1,.36,1) forwards`,
-              willChange: 'opacity, transform, filter',
-            }}
-          >
-            {activeText}
-          </div>
-        </div>
-      )}
-
-      <style jsx>{`
-        @keyframes matrixCountIn {
-          0% { opacity: 0; transform: scale(2.1); filter: blur(12px) brightness(2.5); }
-          62% { opacity: 1; transform: scale(0.94); filter: blur(0) brightness(1.4); }
-          100% { opacity: 1; transform: scale(1); filter: blur(0) brightness(1); }
-        }
-        @keyframes matrixCountOut {
-          0% { opacity: 1; transform: scale(1); filter: blur(0); }
-          100% { opacity: 0; transform: scale(0.12); filter: blur(14px); }
-        }
-        @keyframes matrixWordIn {
-          0% { opacity: 0; transform: scale(1.32) skewX(-7deg); filter: blur(14px) brightness(2.4); }
-          32% { opacity: 1; transform: scale(1.05) skewX(4deg); filter: blur(0) brightness(1.8); }
-          100% { opacity: 1; transform: scale(1) skewX(0); filter: drop-shadow(0 0 18px #ff007f); }
-        }
-        @keyframes matrixWordOut {
-          0% { opacity: 1; transform: scale(1); filter: blur(0); }
-          100% { opacity: 0; transform: scale(0.72); filter: blur(16px); }
-        }
-      `}</style>
     </div>
   )
 }

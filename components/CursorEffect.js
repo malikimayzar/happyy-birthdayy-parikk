@@ -45,7 +45,6 @@ export default function CursorEffect() {
     }
 
     rafId = requestAnimationFrame(updateCursor)
-    // FIX: ganti mousemove → pointermove, tetap aktif saat Swiper intercept drag
     window.addEventListener('pointermove', move, { passive: true })
 
     return () => {

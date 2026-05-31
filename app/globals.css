@@ -149,8 +149,6 @@ img, video { pointer-events:none; -webkit-user-drag:none; user-select:none; }
   pointer-events:none; z-index:99997; animation:rippleOut .6s ease-out forwards;
 }
 
-/*KEYFRAMES*/
-
 /* Countdown */
 @keyframes countPop {
   0%   { opacity:0; transform:scale(2.5); filter:blur(8px); }
@@ -288,4 +286,11 @@ img, video { pointer-events:none; -webkit-user-drag:none; user-select:none; }
 @keyframes subtlePulse {
   0%, 100% { opacity: 0.7; }
   50%       { opacity: 0.3; }
+}
+
+/* Tambahkan di baris paling bawah */
+.pixel-text, canvas {
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  image-rendering: pixelated;
 }

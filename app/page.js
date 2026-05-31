@@ -1,20 +1,25 @@
 'use client'
-import { useState, useEffect, useRef, useCallback } from 'react'
-import SpaceBg from '@/components/SpaceBg'
-import CursorEffect from '@/components/CursorEffect'
-import SplashScene from '@/components/SplashScene'
-import MatrixScene from '@/components/MatrixScene'
-import StarfieldScene from '@/components/StarfieldScene'
-import BookScene from '@/components/BookScene'
-import HeartFinale from '@/components/HeartFinale'
-import MusicBtn from '@/components/MusicBtn'
-import NavDots from '@/components/NavDots'
+
+import { useState, useRef, useCallback, useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import MusicBtn from '../components/MusicBtn'
+import NavDots from '../components/NavDots'
+
+const SpaceBg = dynamic(() => import('../components/SpaceBg'), { ssr: false })
+const CursorEffect = dynamic(() => import('../components/CursorEffect'), { ssr: false })
+const SplashScene = dynamic(() => import('../components/SplashScene'), { ssr: false })
+const MatrixScene = dynamic(() => import('../components/MatrixScene'), { ssr: false })
+const StarfieldScene = dynamic(() => import('../components/StarfieldScene'), { ssr: false })
+const BookScene = dynamic(() => import('../components/BookScene'), { ssr: false })
+const HeartFinale = dynamic(() => import('../components/HeartFinale'), { 
+  ssr: false,
+  loading: () => null,
+})
 
 const TOTAL = 5
 
-// FIX: count dikurangi 10-16 → 5-7, lebih ringan
 function spawnBurst(x, y) {
-  const symbols = ['❤️','💕','✨','💗','⭐','🌸']
+  const symbols = ['❤️', '💕', '✨', '💗', '⭐', '🌸']
   const count = 5 + Math.floor(Math.random() * 3)
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div')
@@ -37,16 +42,10 @@ function spawnBurst(x, y) {
   }
 }
 
-// FIX: glitch disederhanakan jadi simple fade, hapus skew & filter berat
 function triggerGlitch() {
-  const el = document.createElement('div')
-  el.style.cssText = `
-    position:fixed;inset:0;z-index:99990;pointer-events:none;
-    background:rgba(255,20,147,0.08);
-    animation:simpleFade 0.3s ease-out forwards;
-  `
-  document.body.appendChild(el)
-  setTimeout(() => el.remove(), 320)
+  const body = document.body
+  body.classList.add('glitch-active')
+  setTimeout(() => body.classList.remove('glitch-active'), 320)
 }
 
 function AudioController({ audioRef, onReady }) {
@@ -58,16 +57,26 @@ function AudioController({ audioRef, onReady }) {
       start: () => {
         if (!audioRef.current) return
         audioRef.current.volume = 0.35
-        audioRef.current.play().then(() => { setPlaying(true); setVisible(true) }).catch(() => {})
+        audioRef.current
+          .play()
+          .then(() => {
+            setPlaying(true)
+            setVisible(true)
+          })
+          .catch(() => {})
       },
       show: () => setVisible(true),
     })
-  }, [])
+  }, [onReady])
 
   const toggle = () => {
     if (!audioRef.current) return
-    if (playing) { audioRef.current.pause(); setPlaying(false) }
-    else { audioRef.current.play().then(() => setPlaying(true)).catch(() => {}) }
+    if (playing) {
+      audioRef.current.pause()
+      setPlaying(false)
+    } else {
+      audioRef.current.play().then(() => setPlaying(true)).catch(() => {})
+    }
   }
 
   if (!visible) return null
@@ -76,13 +85,16 @@ function AudioController({ audioRef, onReady }) {
 
 export default function Home() {
   const [scene, setScene] = useState(0)
+  const [renderedScene, setRenderedScene] = useState(0)
+  const [fadeOpacity, setFadeOpacity] = useState(0)
   const audioRef = useRef(null)
   const audioCtrlRef = useRef(null)
   const sceneRef = useRef(0)
 
-  useEffect(() => { sceneRef.current = scene }, [scene])
+  useEffect(() => {
+    sceneRef.current = scene
+  }, [scene])
 
-  // FIX: disable burst saat Matrix (scene 1) karena canvas sudah berat
   useEffect(() => {
     const handler = (e) => {
       if (sceneRef.current === 1) return
@@ -102,19 +114,32 @@ export default function Home() {
     if (scene !== 4) return
     const interval = setInterval(() => {
       const el = document.createElement('div')
-      el.style.cssText = `position:fixed;pointer-events:none;font-size:1.4rem;bottom:0;left:${Math.random()*100}vw;z-index:9999;animation:miniFloat 3s ease-out forwards;`
-      el.textContent = ['❤️','💕','💗','💖'][Math.floor(Math.random()*4)]
+      el.style.cssText = `position:fixed;pointer-events:none;font-size:1.4rem;bottom:0;left:${Math.random() * 100}vw;z-index:9999;animation:miniFloat 3s ease-out forwards;`
+      el.textContent = ['❤️', '💕', '💗', '💖'][Math.floor(Math.random() * 4)]
       document.body.appendChild(el)
       setTimeout(() => el.remove(), 3200)
     }, 500)
     return () => clearInterval(interval)
   }, [scene])
 
-  const goScene = useCallback((n) => {
-    if (n >= 0 && n < TOTAL) {
-      triggerGlitch()
-      setScene(n)
+  useEffect(() => {
+    if (renderedScene === 3) {
+      import('../components/HeartFinale').catch(() => {})
     }
+  }, [renderedScene])
+
+  const goScene = useCallback((n) => {
+    if (n < 0 || n >= TOTAL) return
+    if (n === 4) {
+      setScene(4)
+      setFadeOpacity(1)
+      setTimeout(() => setRenderedScene(4), 350)
+      setTimeout(() => setFadeOpacity(0), 700)
+      return
+    }
+    triggerGlitch()
+    setScene(n)
+    setRenderedScene(n)
   }, [])
 
   return (
@@ -123,25 +148,44 @@ export default function Home() {
       <CursorEffect />
       <audio ref={audioRef} loop src="/music/bg.mp3" preload="auto" />
       <AudioController audioRef={audioRef} onReady={(ctrl) => { audioCtrlRef.current = ctrl }} />
-
-      {scene > 1 && <NavDots total={TOTAL-2} current={scene-2} onGo={(i) => goScene(i+2)} />}
-      {scene > 1 && <div id="swipe-hint">swipe ›</div>}
-
-      {scene === 0 && (
-        <SplashScene onEnter={() => {
-          audioCtrlRef.current?.start()
-          goScene(1)
-        }} />
+      {scene > 1 && <NavDots total={TOTAL - 2} current={scene - 2} onGo={(i) => goScene(i + 2)} />}
+      {renderedScene === 0 && (
+        <SplashScene
+          onEnter={() => {
+            audioCtrlRef.current?.start()
+            goScene(1)
+          }}
+        />
       )}
-      {scene === 1 && <MatrixScene onDone={() => goScene(2)} />}
-      {scene === 2 && <StarfieldScene onDone={() => goScene(3)} />}
-      {scene === 3 && <BookScene onDone={() => goScene(4)} />}
-      {scene === 4 && <HeartFinale />}
+      {renderedScene === 1 && <MatrixScene onDone={() => goScene(2)} />}
+      {renderedScene === 2 && <StarfieldScene onDone={() => goScene(3)} />}
+      {renderedScene === 3 && <BookScene onDone={() => goScene(4)} />}
+      {renderedScene === 4 && <HeartFinale />}
+
+      {/* ── NEW: Fade overlay hitam — jembatan antar scene ── */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99999,
+          background: '#000',
+          opacity: fadeOpacity,
+          pointerEvents: fadeOpacity > 0 ? 'all' : 'none',
+          transition: fadeOpacity === 1
+            ? 'opacity 350ms ease-in'   
+            : 'opacity 500ms ease-out', 
+          willChange: 'opacity',
+        }}
+      />
 
       <style>{`
-        @keyframes simpleFade {
-          0%   { opacity: 1; }
-          100% { opacity: 0; }
+        .glitch-active::after {
+          content: '';
+          position: fixed;
+          inset: 0;
+          z-index: 99990;
+          pointer-events: none;
+          background: rgba(255, 20, 147, 0.08);
         }
       `}</style>
     </>
