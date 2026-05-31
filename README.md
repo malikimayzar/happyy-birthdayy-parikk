@@ -16,7 +16,7 @@ aku yapping, alay cuma ke kamu doangggg...., ketua rada engga rada deng, si kami
 ### SEKLIII LAGIIII METTT ULANGG TAHUNNN paaarikaaa...
 samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
-### oiyaaaa parikk janlup di puterrr juga musik nya yaaa..
+### oiyaaaa parikk Kode-Kodean lagiii ni yee...
 🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
 
 ### Ini Temen aku juga katanya.... mau nitip pesann ini kata doi
