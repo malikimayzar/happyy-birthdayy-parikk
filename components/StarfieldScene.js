@@ -18,9 +18,7 @@ export default function StarfieldScene({ onDone }) {
     if (video) {
       video.muted = true
       video.playsInline = true
-      setTimeout(() => {
-        video.play().catch(() => {})
-      }, 100)
+      video.setAttribute('webkit-playsinline', 'true')
     }
 
     const enterFrame = requestAnimationFrame(() => {
@@ -38,6 +36,53 @@ export default function StarfieldScene({ onDone }) {
       cancelAnimationFrame(enterFrame)
     }
   }, [onDone])
+
+  // ─ Low Power Mode Fallback: Trigger video play on first touch if autoplay fails ─
+  useEffect(() => {
+    if (!entered) return
+
+    const video = videoRef.current
+    if (!video) return
+
+    let playAttempted = false
+    let touchListenerAttached = false
+
+    const attemptPlay = () => {
+      if (playAttempted) return
+      playAttempted = true
+
+      video.play().then(() => {
+        // Play succeeded; remove touch listener if it exists
+        if (touchListenerAttached) {
+          window.removeEventListener('touchstart', handleTouchFallback, { once: true })
+          touchListenerAttached = false
+        }
+      }).catch((error) => {
+        // Play failed (likely Low Power Mode on iOS)
+        // Attach one-time touchstart listener as fallback
+        if (!touchListenerAttached) {
+          touchListenerAttached = true
+          window.addEventListener('touchstart', handleTouchFallback, { once: true })
+        }
+      })
+    }
+
+    const handleTouchFallback = () => {
+      touchListenerAttached = false
+      video.play().catch(() => {})
+    }
+
+    // Initial play attempt after a brief delay to ensure video is ready
+    const playTimer = setTimeout(attemptPlay, 150)
+
+    return () => {
+      clearTimeout(playTimer)
+      if (touchListenerAttached) {
+        window.removeEventListener('touchstart', handleTouchFallback)
+        touchListenerAttached = false
+      }
+    }
+  }, [entered])
 
   return (
     <div

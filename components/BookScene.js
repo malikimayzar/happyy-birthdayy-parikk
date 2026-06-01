@@ -246,12 +246,6 @@ export default function BookScene({ onDone }) {
 
   return (
     <>
-      <audio
-        ref={flipSoundRef}
-        src="/music/vn1.mp3"
-        preload="auto"
-        style={{ display: 'none' }}
-      />
       <style>{`
         .swiper-slide {
           transform-style: preserve-3d;
