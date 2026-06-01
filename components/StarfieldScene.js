@@ -70,7 +70,7 @@ export default function StarfieldScene({ onDone }) {
           loop
           muted
           playsInline
-          webkitPlaysinline
+          webkitplaysinline
           preload="auto"
           style={{
             width: 'clamp(200px, 60vw, 360px)',
