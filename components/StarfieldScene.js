@@ -13,7 +13,16 @@ export default function StarfieldScene({ onDone }) {
     el.style.opacity = '0'
     el.style.transition = 'opacity .8s ease'
     requestAnimationFrame(() => { el.style.opacity = '1' })
-    
+
+    const video = videoRef.current
+    if (video) {
+      video.muted = true
+      video.playsInline = true
+      setTimeout(() => {
+        video.play().catch(() => {})
+      }, 100)
+    }
+
     const enterFrame = requestAnimationFrame(() => {
       setTimeout(() => setEntered(true), 80)
     })
