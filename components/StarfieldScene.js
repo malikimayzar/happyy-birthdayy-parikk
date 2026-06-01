@@ -1,10 +1,31 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 export default function StarfieldScene({ onDone }) {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
   const [entered, setEntered] = useState(false)
+
+  // ─ Callback Ref: Immediate DOM-level autoplay during injection phase (bypasses timing issues) ─
+  const videoRefCallback = useCallback((node) => {
+    if (node) {
+      // 1. Force absolute silence at the strict DOM level immediately
+      node.muted = true
+      node.defaultMuted = true
+      node.setAttribute('muted', '1')
+      node.playsInline = true
+      node.setAttribute('playsinline', 'true')
+      node.setAttribute('webkit-playsinline', 'true')
+
+      // 2. Fire play immediately during the DOM injection phase
+      node.play().catch((err) => {
+        console.log('Autoplay blocked by strict iOS policy (e.g. Low Power Mode), keeping touchstart fallback active:', err)
+      })
+
+      // Store the node in a standard ref for later use
+      videoRef.current = node
+    }
+  }, [])
 
   useEffect(() => {
     const el = containerRef.current
@@ -13,13 +34,6 @@ export default function StarfieldScene({ onDone }) {
     el.style.opacity = '0'
     el.style.transition = 'opacity .8s ease'
     requestAnimationFrame(() => { el.style.opacity = '1' })
-
-    const video = videoRef.current
-    if (video) {
-      video.muted = true
-      video.playsInline = true
-      video.setAttribute('webkit-playsinline', 'true')
-    }
 
     const enterFrame = requestAnimationFrame(() => {
       setTimeout(() => setEntered(true), 80)
@@ -109,13 +123,10 @@ export default function StarfieldScene({ onDone }) {
         animation: entered ? 'cardPulse 3.5s ease-in-out 600ms infinite' : 'none',
       }}>
         <video
-          ref={videoRef}
+          ref={videoRefCallback}
           src="/video/cat-birthday.mp4"
           autoPlay
           loop
-          muted
-          playsInline
-          webkitplaysinline
           preload="auto"
           style={{
             width: 'clamp(200px, 60vw, 360px)',
