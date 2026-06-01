@@ -180,6 +180,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
 export default function BookScene({ onDone }) {
   const doneRef = useRef(false)
   const lastSwipeTime = useRef(0)
+  const flipSoundRef = useRef(null)
   const [slide, setSlide] = useState(0)
   const [tapped, setTapped] = useState(false)
   const [ready, setReady] = useState(false)
@@ -190,6 +191,12 @@ export default function BookScene({ onDone }) {
     const onLoad = () => setTimeout(() => setReady(true), 150)
     if (img.complete) onLoad()
     else { img.onload = onLoad; img.onerror = onLoad }
+    
+    // Preload flip sound and attempt audio unlock
+    if (flipSoundRef.current) {
+      flipSoundRef.current.preload = 'auto'
+      flipSoundRef.current.load()
+    }
   }, [])
 
   const totalSlides = PAGES.length
@@ -197,6 +204,13 @@ export default function BookScene({ onDone }) {
   const [coverSwiped, setCoverSwiped] = useState(false)
 
   const handleSlideChange = (swiper) => {
+    // Play flip sound with volume throttling for iOS
+    if (flipSoundRef.current) {
+      flipSoundRef.current.currentTime = 0
+      flipSoundRef.current.volume = 0.4
+      flipSoundRef.current.play().catch(() => {})
+    }
+    
     if (swiper.activeIndex === totalSlides - 2) {
       lastSwipeTime.current = Date.now()
     }
@@ -232,6 +246,12 @@ export default function BookScene({ onDone }) {
 
   return (
     <>
+      <audio
+        ref={flipSoundRef}
+        src="/music/vn1.mp3"
+        preload="auto"
+        style={{ display: 'none' }}
+      />
       <style>{`
         .swiper-slide {
           transform-style: preserve-3d;

@@ -18,6 +18,27 @@ const HeartFinale = dynamic(() => import('../components/HeartFinale'), {
 
 const TOTAL = 5
 
+// ─ Audio Unlock: Initialize audio context on first user interaction (iOS Safari fix) ─
+let audioUnlocked = false
+function unlockAudio() {
+  if (audioUnlocked) return
+  audioUnlocked = true
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)()
+    const osc = ac.createOscillator()
+    const gain = ac.createGain()
+    const t = ac.currentTime
+    osc.connect(gain)
+    gain.connect(ac.destination)
+    osc.type = 'sine'
+    osc.frequency.setValueAtTime(100, t)
+    gain.gain.setValueAtTime(0, t)
+    osc.start(t)
+    osc.stop(t + 0.001)
+    setTimeout(() => { try { ac.close() } catch (e) {} }, 100)
+  } catch (e) {}
+}
+
 function spawnBurst(x, y) {
   const symbols = ['❤️', '💕', '✨', '💗', '⭐', '🌸']
   const count = 5 + Math.floor(Math.random() * 3)
@@ -55,6 +76,7 @@ function AudioController({ audioRef, onReady }) {
   useEffect(() => {
     onReady({
       start: () => {
+        unlockAudio()
         if (!audioRef.current) return
         audioRef.current.volume = 0.35
         audioRef.current
@@ -63,6 +85,7 @@ function AudioController({ audioRef, onReady }) {
           .catch(() => {})
       },
       show: () => setVisible(true),
+      unlockAudio: unlockAudio,
     })
   }, [onReady])
 
@@ -95,6 +118,7 @@ export default function Home() {
 
   useEffect(() => {
     const handler = (e) => {
+      unlockAudio()
       if (sceneRef.current === 1) return
       if (fadingRef.current) return 
       const x = e.clientX ?? e.touches?.[0]?.clientX
