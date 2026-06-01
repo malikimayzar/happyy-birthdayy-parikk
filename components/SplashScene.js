@@ -135,8 +135,10 @@ export default function SplashScene({ onEnter }) {
 
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
           gap: 'clamp(14px,3.5vw,28px)',
-          position: 'relative', zIndex: 10,
+          position: 'relative', zIndex: 10, 
           padding: '0 clamp(20px, 6vw, 60px)',
         }}>
 
