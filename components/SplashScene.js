@@ -151,7 +151,7 @@ export default function SplashScene({ onEnter }) {
           }}>
             <h1 style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 7.5vw, 72px)',
+              fontSize: 'clamp(30px, 7.5vw, 72px)',
               lineHeight: 1.15,
               textAlign: 'center',
               color: '#ffffff',
