@@ -18,9 +18,8 @@ aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... de
 samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
-🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
-
 <img src="public/photos/beatles.jpeg" alt="The Beatles" width="165" />
+🎵 [Putar / Download Lagu](public/music/vn1.mp3)
 
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
