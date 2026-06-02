@@ -40,5 +40,5 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 
 <div style="display: flex; gap: 10px; margin-left: 20px;">
   <img src="public/photos/meme3.png" alt="Foto 1" width="165" />
-  <img src="public/photos/meme2.jpeg" alt="Foto 2" width="165" />
+  <img src="public/photos/meme1.jpeg" alt="Foto 2" width="165" />
 </div>
