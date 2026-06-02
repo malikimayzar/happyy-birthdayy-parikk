@@ -1,6 +1,10 @@
-<p align="center">
-  <img src="public/photos/hepi.png" width="165" /> <img src="public/photos/habede.png" width="165" /> <img src="public/photos/parika.png" width="165" />
-</p>
+<div align="center">
+
+| | | |
+|:---:|:---:|:---:|
+| <img src="public/photos/hepi.png" width="140" /> | <img src="public/photos/habede.png" width="140" /> | <img src="public/photos/parika.png" width="140" /> |
+
+</div>
 
 ## misi - misiii.... parikk?
 
