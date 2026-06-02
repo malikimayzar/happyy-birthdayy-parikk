@@ -26,6 +26,7 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
 ### ehh.. parikk..., Temen aku mau ngomong katanya.... 
+
 🗣️ [Putar / Download Pesan Suara](public/music/vn2.mp3)
 
 <img src="public/photos/image.png" alt="The Beatles" width="165" />
