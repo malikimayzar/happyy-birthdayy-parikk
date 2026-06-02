@@ -128,7 +128,7 @@ export default function MatrixScene({ onDone }) {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = window.innerWidth
       height = window.innerHeight
-      fontSize = Math.max(14, Math.min(18, Math.floor(width / 28)))
+      fontSize = width < 600 ? 24 : Math.max(14, Math.min(18, Math.floor(width / 28)))
 
       const colSpacing = fontSize * 0.42
       const baseColCount = Math.ceil(width / colSpacing) + 6
@@ -150,7 +150,7 @@ export default function MatrixScene({ onDone }) {
 
       drops = Array.from({ length: cols }, (_, i) => ({
         y: Math.random() > 0.4 ? Math.random() * -height * 1.5 : Math.random() * height * 0.5,
-        speed: fontSize * (0.45 + Math.random() * 0.9),
+        speed: fontSize * (0.7 + Math.random() * 0.6),
         length: Math.floor(height / fontSize * (0.6 + Math.random() * 0.4)),
         x: i * adjustedSpacing,
         chars: Array.from({ length: 60 }, () => HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)]),
@@ -263,9 +263,10 @@ export default function MatrixScene({ onDone }) {
     }
 
     const drawRain = () => {
-      ctx.shadowBlur = 0
-      ctx.shadowColor = 'transparent'
-      ctx.font = `900 ${fontSize + 3}px monospace`
+      ctx.shadowBlur = 12
+      ctx.shadowColor = '#ff1493'
+
+      ctx.font = `900 ${fontSize + 4}px monospace`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'top'
       drops.forEach(drop => {
@@ -287,7 +288,7 @@ export default function MatrixScene({ onDone }) {
         drop.y += drop.speed
         if (drop.y - drop.length * fontSize > height) {
           drop.y = -fontSize * (0.5 + Math.random() * 5)
-          drop.speed = fontSize * (0.45 + Math.random() * 0.9)
+          drop.speed = fontSize * (0.7 + Math.random() * 0.6)
           drop.length = Math.floor(height / fontSize * (0.6 + Math.random() * 0.4))
         }
       })
