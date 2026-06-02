@@ -75,6 +75,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
       transform: 'translateZ(0)',
       WebkitTransform: 'translateZ(0)',
     }}>
+
       {/* Glow border: breath pulse */}
       <div style={{
         width: '100%', height: '100%',
@@ -92,6 +93,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
         backfaceVisibility: 'hidden',
         WebkitBackfaceVisibility: 'hidden',
       }}>
+
         <div style={{
           width: '100%', height: '100%',
           position: 'relative', overflow: 'visible',
@@ -129,6 +131,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
               padding: '0 20px', textAlign: 'center',
               zIndex: 5,
             }}>
+
               <p style={{
                 fontFamily: "'Dancing Script', cursive",
                 fontSize: isCover ? '22px' : '20px',
@@ -147,6 +150,7 @@ function PhotoCard({ photo, message, isCover, isBack, pageNum, total, isActive }
                 animation: isActive && done ? 'textOpacityPulse 3s ease-in-out infinite' : 'none',
                 willChange: isActive && done ? 'opacity' : 'auto',
               }}>
+
                 {isActive ? displayed : message}
                 {isActive && !done && (
                   <span style={{
@@ -191,8 +195,6 @@ export default function BookScene({ onDone }) {
     const onLoad = () => setTimeout(() => setReady(true), 150)
     if (img.complete) onLoad()
     else { img.onload = onLoad; img.onerror = onLoad }
-    
-    // Preload flip sound and attempt audio unlock
     if (flipSoundRef.current) {
       flipSoundRef.current.preload = 'auto'
       flipSoundRef.current.load()
@@ -204,7 +206,6 @@ export default function BookScene({ onDone }) {
   const [coverSwiped, setCoverSwiped] = useState(false)
 
   const handleSlideChange = (swiper) => {
-    // Play flip sound with volume throttling for iOS
     if (flipSoundRef.current) {
       flipSoundRef.current.currentTime = 0
       flipSoundRef.current.volume = 0.4

@@ -5,24 +5,17 @@ export default function StarfieldScene({ onDone }) {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
   const [entered, setEntered] = useState(false)
-
-  // ─ Callback Ref: Immediate DOM-level autoplay during injection phase (bypasses timing issues) ─
   const videoRefCallback = useCallback((node) => {
     if (node) {
-      // 1. Force absolute silence at the strict DOM level immediately
       node.muted = true
       node.defaultMuted = true
       node.setAttribute('muted', '1')
       node.playsInline = true
       node.setAttribute('playsinline', 'true')
       node.setAttribute('webkit-playsinline', 'true')
-
-      // 2. Fire play immediately during the DOM injection phase
       node.play().catch((err) => {
         console.log('Autoplay blocked by strict iOS policy (e.g. Low Power Mode), keeping touchstart fallback active:', err)
       })
-
-      // Store the node in a standard ref for later use
       videoRef.current = node
     }
   }, [])
@@ -51,7 +44,6 @@ export default function StarfieldScene({ onDone }) {
     }
   }, [onDone])
 
-  // ─ Low Power Mode Fallback: Trigger video play on first touch if autoplay fails ─
   useEffect(() => {
     if (!entered) return
 
@@ -66,14 +58,11 @@ export default function StarfieldScene({ onDone }) {
       playAttempted = true
 
       video.play().then(() => {
-        // Play succeeded; remove touch listener if it exists
         if (touchListenerAttached) {
           window.removeEventListener('touchstart', handleTouchFallback, { once: true })
           touchListenerAttached = false
         }
       }).catch((error) => {
-        // Play failed (likely Low Power Mode on iOS)
-        // Attach one-time touchstart listener as fallback
         if (!touchListenerAttached) {
           touchListenerAttached = true
           window.addEventListener('touchstart', handleTouchFallback, { once: true })
@@ -85,8 +74,7 @@ export default function StarfieldScene({ onDone }) {
       touchListenerAttached = false
       video.play().catch(() => {})
     }
-
-    // Initial play attempt after a brief delay to ensure video is ready
+    
     const playTimer = setTimeout(attemptPlay, 150)
 
     return () => {

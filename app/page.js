@@ -18,7 +18,6 @@ const HeartFinale = dynamic(() => import('../components/HeartFinale'), {
 
 const TOTAL = 5
 
-// ─ Audio Unlock: Initialize audio context on first user interaction (iOS Safari fix) ─
 let audioUnlocked = false
 function unlockAudio() {
   if (audioUnlocked) return
