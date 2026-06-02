@@ -1,12 +1,12 @@
-<div align="center">
+<p align="center">
+  <img src="public/photos/hepi.png" width="140" />
+  <img src="public/photos/habede.png" width="140" />
+  <img src="public/photos/parika.png" width="140" />
+</p>
 
-| | | |
-|:---:|:---:|:---:|
-| <img src="public/photos/hepi.png" width="140" /> | <img src="public/photos/habede.png" width="140" /> | <img src="public/photos/parika.png" width="140" /> |
-
-</div>
-
-## misi - misiii.... parikk?
+<p align="center">
+  <b>misi - misiii.... parikk?</b>
+</p>
 
 ### wakaaakaak gausahh tebak tebakan lagi kali yaa...
 
