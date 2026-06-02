@@ -20,8 +20,8 @@ const BASE_PHOTOS = [
 const PHOTOS = Array.from({ length: 24 }, (_, i) => BASE_PHOTOS[i % BASE_PHOTOS.length])
 const FALLBACKS = ['♡', '✦', '♥', '✧']
 const POLAROID_LABELS = [
-  'happy birthday', 'with love', 'xoxo', 'forever ♡',
-  'always you', 'my dear', 'smile ♥', 'stay sweet',
+  'happy birthday', 'with love', 'love you ♥', 'forever ♥',
+  'my sunshine', 'my dear', 'smile ♥', 'stay sweet',
 ]
 
 function heartPositions(n) {
