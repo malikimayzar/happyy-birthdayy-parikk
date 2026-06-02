@@ -18,6 +18,7 @@ wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., 
   <img src="public/photos/meme4.jpeg" alt="Deskripsi Foto" width="300" />
 </div>
 
+
 aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... deng, si kami "JAIMMMM" parahhh
 
 ### SEKAAALIII LAGIIII METTT ULANGG TAHUNNN PAaAAaAARIKAaAaAAAa...
