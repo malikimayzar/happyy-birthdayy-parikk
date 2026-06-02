@@ -19,7 +19,9 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
 🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
-    
+
+![The Beatles](photos/beatles.png)
+
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
 ### ehh.. parikk..., Temen aku mau ngomong katanya.... 
