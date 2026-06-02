@@ -1,4 +1,6 @@
-<img src="public/photos/metultahnenggeulis.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
+<div align="center">
+  <img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday" width="600" />
+</div>
 
 ### misi - misiii.... parikk?
 
