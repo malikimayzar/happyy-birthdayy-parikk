@@ -10,7 +10,11 @@ sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal n
 
 wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain(nu benerr wae maliki🤭)
 
+
+
 <img src="public/photos/meme2.jpeg" alt="The Beatles" width="165" />
+
+
 
 ## oiyaaa parikkkk...., janiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
 
