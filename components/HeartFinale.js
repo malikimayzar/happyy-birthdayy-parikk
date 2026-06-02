@@ -51,7 +51,6 @@ function heartPositions(n) {
   return positions
 }
 
-// ── plasPop: throttled, max 1 AudioContext per 80ms ──
 let lastPopTime = 0
 function plasPop() {
   const now = Date.now()
@@ -205,16 +204,24 @@ function PhotoCard({ src, targetX, targetY, delay, rotate, fallback, cardSize, i
           }}>{fallback}</div>
         )}
       </div>
+
+      {/* AREA TEXT POLAROID YANG SUDAH DI-TUNING AKURASI DAN KETAHANANNYA */}
       <div style={{
-        height: Math.round(cardSize * 0.22),
+        height: Math.round(cardSize * 0.26),
         background: '#fdf6f0',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        flexShrink: 0, paddingBottom: 2,
+        flexShrink: 0, paddingBottom: 4,
       }}>
         <p className={greatVibes.className} style={{
-          margin: 0, color: '#2d1a1a',
-          fontSize: Math.max(10, Math.round(cardSize * 0.175)),
-          lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
+          margin: 0, 
+          color: '#111111',
+          fontSize: Math.max(13, Math.round(cardSize * 0.23)), 
+          lineHeight: '1.2', 
+          userSelect: 'none', 
+          pointerEvents: 'none',
+          WebkitFontSmoothing: 'antialiased', 
+          MozOsxFontSmoothing: 'grayscale',  
+          textShadow: '0.2px 0 0px #111, -0.2px 0 0px #111', 
         }}>
           {POLAROID_LABELS[index % POLAROID_LABELS.length]}
         </p>
