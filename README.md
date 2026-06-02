@@ -1,12 +1,4 @@
-<p align="center">
-  <img src="public/photos/hepi.png" width="140" />
-  <img src="public/photos/habede.png" width="140" />
-  <img src="public/photos/parika.png" width="140" />
-</p>
-
-<p align="center">
-  <b>misi - misiii.... parikk?</b>
-</p>
+## misi - misiii.... parikk?
 
 ### wakaaakaak gausahh tebak tebakan lagi kali yaa...
 
