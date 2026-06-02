@@ -1,6 +1,8 @@
-<img src="public/photos/metultahnenggeulis.png" alt="The Beatles" width="165" />
+<p align="center">
+  <img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday" width="400" />
+</p>
 
-## misi - misiii.... parikk?
+### misi - misiii.... parikk?
 
 ### wakaaakaak gausahh tebak tebakan lagi kali yaa...
 
