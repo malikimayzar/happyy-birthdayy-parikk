@@ -1,4 +1,4 @@
-<img src="public/photos/hepi.png" alt="The Beatles" width="165" /> <img src="public/photos/habede.png" alt="The Beatles" width="165" />
+<img src="public/photos/hepi.png" alt="The Beatles" width="165" /> <img src="public/photos/habede.png" alt="The Beatles" width="165" /> <img src="public/photos/parika.png" alt="The Beatles" width="165" /> 
 
 ## misi - misiii.... parikk?
 
