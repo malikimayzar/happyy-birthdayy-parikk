@@ -38,7 +38,7 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 ## Ekhemm....
 ### ekhhemmm di tunggu....,  respon nya di tempat biasa Ekhemm.... 
 
-<div style="display: flex; gap: 10px; margin-left: 20px;">
-  <img src="public/photos/meme3.png" alt="Foto 1" width="165" />
-  <img src="public/photos/meme1.jpeg" alt="Foto 2" width="165" />
+<div align="center">
+  <img src="public/photos/meme2.png" alt="Foto Teks" width="165" />
+  <img src="public/photos/meme1.jpeg" alt="Foto Meme" width="165" />
 </div>
