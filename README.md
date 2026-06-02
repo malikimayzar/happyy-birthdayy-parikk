@@ -21,6 +21,7 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 <img src="public/photos/beatles.jpeg" alt="The Beatles" width="165" />
 🎵 [Putar / Download Lagu](public/music/vn1.mp3)
 
+
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
 ### ehh.. parikk..., Temen aku mau ngomong katanya.... 
