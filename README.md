@@ -20,7 +20,7 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
 🎵 [Putar / Download Pesan Suara](public/music/vn1.mp3)
 
-![The Beatles](photos/beatles.jpeg)
+![The Beatles](public/photos/beatles.jpeg)
 
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
