@@ -1,3 +1,5 @@
+<img src="public/photos/metultahnenggeulis.png" alt="The Beatles" width="165" />
+
 ## misi - misiii.... parikk?
 
 ### wakaaakaak gausahh tebak tebakan lagi kali yaa...
