@@ -1,4 +1,4 @@
-# Happy Birthday Farikha
+<img src="public/photos/hepi.png" alt="The Beatles" width="165" />
 
 ## misi - misiii.... parikk?
 
