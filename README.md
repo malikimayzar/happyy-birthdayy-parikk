@@ -1,4 +1,4 @@
-<img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday Farikha" width="450" />
+<img src="public/photos/metultahnenggeulis.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
 
 ### misi - misiii.... parikk?
 
