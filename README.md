@@ -12,7 +12,7 @@ wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., 
 
 
 
-<img src="public/photos/meme2.jpeg" alt="The Beatles" width="165" />
+<img src="public/photos/meme2.png" alt="The Beatles" width="165" />
 
 
 
