@@ -1,4 +1,4 @@
-<img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday Farikha" width="700" />
+<img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday Farikha" width="600" />
 
 ### misi - misiii.... parikk?
 
