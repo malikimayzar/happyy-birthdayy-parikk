@@ -231,7 +231,7 @@ export default function MatrixScene({ onDone }) {
         }
 
         const pulse = 0.92 + 0.08 * Math.sin(now / 120)
-        const shadowFade = t < 0.15 ? (1 - t / 0.15) : 0
+        const shadowFade = t < 0.5 ? (1 - t / 0.5) : 0
         const shadowIntensity = (isCountdownPhase ? 8 : 18) * shadowFade
         ctx.shadowBlur = shadowIntensity > 0.1 ? shadowIntensity : 0
         ctx.shadowColor = shadowFade > 0 ? '#ff007f' : 'transparent'
@@ -298,7 +298,7 @@ export default function MatrixScene({ onDone }) {
     const draw = () => {
       if (!running) return
       const now = performance.now()
-      ctx.fillStyle = 'rgba(0,0,0,0.04)'
+      ctx.fillStyle = 'rgba(0,0,0,0.07)'
       ctx.fillRect(0, 0, width, height)
       ctx.globalAlpha = 1
       ctx.shadowBlur = 0
