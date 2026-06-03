@@ -25,6 +25,7 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 
 ### aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... deng, si kami "JAIMMMM" parahhh
 
+
 ## SEKAAALIII LAGIIII METTT ULANGG TAHUNNN PAaAAaAARIKAaAaAAAa...
 
 ## samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
