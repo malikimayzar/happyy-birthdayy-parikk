@@ -110,11 +110,11 @@ export default function MatrixScene({ onDone }) {
     let presampled = null
     let isCountdownPhase = false
 
-    const MORPH_MS   = 280
-    const HOLD_COUNT = 1800
-    const HOLD_WORD  = 2400
-    const HOLD_LAST  = 2800
-    const HOLD_HEART = 2500
+    const MORPH_MS   = 170
+    const HOLD_COUNT = 1200
+    const HOLD_WORD  = 1600
+    const HOLD_LAST  = 2000
+    const HOLD_HEART = 2000
 
     let pSize = 2.0 
 
