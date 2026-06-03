@@ -24,8 +24,8 @@ wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., 
 
 aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... deng, si kami "JAIMMMM" parahhh
 
-### SEKAAALIII LAGIIII METTT ULANGG TAHUNNN PAaAAaAARIKAaAaAAAa...
-# samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
+# SEKAAALIII LAGIIII METTT ULANGG TAHUNNN PAaAAaAARIKAaAaAAAa...
+## samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
 <img src="public/meme/beatles.jpeg" alt="The Beatles" width="165" />
