@@ -49,6 +49,9 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 <div align="center">
   <img src="public/meme/meme3.png" alt="Foto Teks" width="170" />
   <img src="public/meme/meme1.jpeg" alt="Foto Meme" width="165" />
+  <img src="public/meme/meme6.jpeg" alt="Foto Meme" width="165" />
+  <img src="public/meme/meme5.jpeg" alt="Foto Meme" width="165" />
 </div>
 
 # Mogaa..... Sukaa.... yaaa...(sama aku 🤭) sama web nya...
+Whatever you do, I always support you
