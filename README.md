@@ -50,3 +50,5 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
   <img src="public/meme/meme3.png" alt="Foto Teks" width="170" />
   <img src="public/meme/meme1.jpeg" alt="Foto Meme" width="165" />
 </div>
+
+# Mogaa..... Sukaa.... yaaa...(sama aku 🤭) sama web nya...
