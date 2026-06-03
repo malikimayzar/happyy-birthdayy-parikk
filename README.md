@@ -11,7 +11,8 @@ halooo selamat ulang tahun yaaa..., semoga panjang umur, sehat selalu & dilancar
 semoga hal-hal baik selalu datang ke ke parika silmisyu, oiyaaaa. ngomong-ngomong kalo web nya ada bug,
 sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal nya xixixixixixixi sebenernya aku, kurang suka(tapi sukanya K@MU😱😱😱😱😱😱😱😱😱😱) bikin web karena kurang minat(tapi minat nya ke K@MU)
 
-wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain(nu benerr wae maliki🤭)
+## wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus 
+"BUAT" Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain(nu benerr wae maliki🤭)
 
 <img src="public/meme/meme2.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
 
