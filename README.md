@@ -54,4 +54,3 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 </div>
 
 # Mogaa..... Sukaa.... yaaa...(sama aku 🤭) sama web nya...
-Whatever you do, I always support you
