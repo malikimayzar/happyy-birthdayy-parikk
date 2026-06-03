@@ -7,7 +7,7 @@ export default function SplashScene({ onEnter }) {
   const trailRef = useRef(null)
   const [stars, setStars] = useState([])
   const [visible, setVisible] = useState(false)
-  const [displayedText, setDisplayedText] = useState('')
+  const textRef = useRef(null)
   let lastTrail = useRef(0)
   const fullText = 'For Silmisyu'
 
@@ -49,20 +49,20 @@ export default function SplashScene({ onEnter }) {
   }, [])
 
   useEffect(() => {
-    if (!visible) return
-    
+    if (!visible || !textRef.current) return
+    const el = textRef.current
+    el.textContent = ''
     let index = 0
     const interval = setInterval(() => {
       if (index < fullText.length) {
-        setDisplayedText(fullText.slice(0, index + 1))
+        el.textContent = fullText.slice(0, index + 1)
         index++
       } else {
         clearInterval(interval)
       }
     }, 80)
-    
     return () => clearInterval(interval)
-  }, [visible, fullText])
+  }, [visible])
 
   const handleClick = () => {
     const el = containerRef.current
@@ -174,19 +174,20 @@ export default function SplashScene({ onEnter }) {
             </h1>
           </div>
 
-          {/* Subtitle */}
-          <div style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0) translateZ(0)' : 'translateY(14px) translateZ(0)',
-            transition: 'all 0.9s ease 0.45s',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 12,
-            width: '100%',
-          }}>
+            {/* Subtitle */}
+            <div style={{
+              opacity: 0,
+              animation: 'fadeSlideUp 0.9s ease 1.15s forwards',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 12,
+              width: '100%',
+            }}>
             <div style={{ width: 40, height: 1, background: 'linear-gradient(to right, transparent, rgba(255,182,217,.6))' }} />
-            <p style={{
+           <p
+            ref={textRef}
+            style={{
               color: '#ffb6d9',
               textShadow: '0 0 12px rgba(255,105,180,.6)',
               fontFamily: "'Dancing Script', cursive",
@@ -194,9 +195,8 @@ export default function SplashScene({ onEnter }) {
               letterSpacing: '.1em',
               margin: 0,
               whiteSpace: 'nowrap',
-            }}>
-              {displayedText}
-            </p>
+            }}
+          />
             <div style={{ width: 40, height: 1, background: 'linear-gradient(to left, transparent, rgba(255,182,217,.6))' }} />
           </div>
 
@@ -277,6 +277,10 @@ export default function SplashScene({ onEnter }) {
             transform: translateY(-20px);
           }
         }
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+          }
       `}</style>
     </>
   )

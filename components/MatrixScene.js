@@ -128,11 +128,11 @@ export default function MatrixScene({ onDone }) {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = window.innerWidth
       height = window.innerHeight
-      fontSize = width < 600 ? 24 : Math.max(14, Math.min(18, Math.floor(width / 28)))
+      fontSize = Math.max(10, Math.min(13, Math.floor(width / 45)))
 
       const colSpacing = fontSize * 0.42
       const baseColCount = Math.ceil(width / colSpacing) + 6
-      const cols = isCountdownPhase ? Math.max(8, Math.floor(baseColCount * 0.3)) : Math.floor(baseColCount * 0.9)
+      const cols = isCountdownPhase ? Math.max(8, Math.floor(baseColCount * 0.25)) : Math.floor(baseColCount * 0.75)
       const adjustedSpacing = width / cols
 
       canvas.width = Math.floor(width * dpr)
@@ -150,7 +150,7 @@ export default function MatrixScene({ onDone }) {
 
       drops = Array.from({ length: cols }, (_, i) => ({
         y: Math.random() > 0.4 ? Math.random() * -height * 1.5 : Math.random() * height * 0.5,
-        speed: fontSize * (0.7 + Math.random() * 0.6),
+        speed: fontSize * (0.25 + Math.random() * 0.4),
         length: Math.floor(height / fontSize * (0.6 + Math.random() * 0.4)),
         x: i * adjustedSpacing,
         chars: Array.from({ length: 60 }, () => HEART_CHARS[Math.floor(Math.random() * HEART_CHARS.length)]),
@@ -263,8 +263,8 @@ export default function MatrixScene({ onDone }) {
     }
 
     const drawRain = () => {
-      ctx.shadowBlur = 12
-      ctx.shadowColor = '#ff1493'
+      ctx.shadowBlur = 0
+      ctx.shadowColor =  'transparent'
 
       ctx.font = `900 ${fontSize + 4}px monospace`
       ctx.textAlign = 'center'
@@ -288,7 +288,7 @@ export default function MatrixScene({ onDone }) {
         drop.y += drop.speed
         if (drop.y - drop.length * fontSize > height) {
           drop.y = -fontSize * (0.5 + Math.random() * 5)
-          drop.speed = fontSize * (0.7 + Math.random() * 0.6)
+          drop.speed = fontSize * (0.25 + Math.random() * 0.4)
           drop.length = Math.floor(height / fontSize * (0.6 + Math.random() * 0.4))
         }
       })
@@ -298,7 +298,7 @@ export default function MatrixScene({ onDone }) {
     const draw = () => {
       if (!running) return
       const now = performance.now()
-      ctx.fillStyle = 'rgba(0,0,0,0.055)'
+      ctx.fillStyle = 'rgba(0,0,0,0.04)'
       ctx.fillRect(0, 0, width, height)
       ctx.globalAlpha = 1
       ctx.shadowBlur = 0
