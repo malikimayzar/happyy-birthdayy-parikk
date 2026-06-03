@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/photos/metultahnenggeulis.png" alt="Happy Birthday" width="600" />
+  <img src="public/meme/metultahnenggeulis.png" alt="Happy Birthday" width="600" />
 </div>
 
 
@@ -13,12 +13,12 @@ sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal n
 
 wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT" Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain(nu benerr wae maliki🤭)
 
-<img src="public/photos/meme2.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
+<img src="public/meme/meme2.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
 
 ## oiyaaa parikkkk...., janiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
 
 <div align="center">
-  <img src="public/photos/meme4.jpeg" alt="Deskripsi Foto" width="300" />
+  <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="300" />
 </div>
 
 
@@ -28,7 +28,7 @@ aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... de
 samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...
-<img src="public/photos/beatles.jpeg" alt="The Beatles" width="165" />
+<img src="public/meme/beatles.jpeg" alt="The Beatles" width="165" />
 
 🎵 [Putar / Download Lagu](public/music/vn1.mp3)
 
@@ -39,7 +39,7 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 
 [Putar / Download Pesan Suara](public/music/vn2.mp3)
 
-<img src="public/photos/image.png" alt="The Beatles" width="165" />
+<img src="public/meme/image.png" alt="The Beatles" width="165" />
 
 
 # Ekhemmmm.....
@@ -47,6 +47,6 @@ samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin 
 ### ekhhemmm di tunggu....,  respon nya di tempat biasa Ekhemm.... 
 
 <div align="center">
-  <img src="public/photos/meme3.png" alt="Foto Teks" width="170" />
-  <img src="public/photos/meme1.jpeg" alt="Foto Meme" width="165" />
+  <img src="public/meme/meme3.png" alt="Foto Teks" width="170" />
+  <img src="public/meme/meme1.jpeg" alt="Foto Meme" width="165" />
 </div>
