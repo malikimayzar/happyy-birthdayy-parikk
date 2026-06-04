@@ -65,6 +65,6 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
   <img src="public/meme/meme11.png" alt="Foto Teks" width="170" />
   <img src="public/meme/meme10.png" alt="Foto Meme" width="165" />
   <img src="public/meme/meme8.png" alt="Foto Meme" width="170" />
-  <img src="public/meme/meme9.jpeg" alt="Foto Meme" width="190" />
-  <img src="public/meme/meme7.jpeg" alt="Foto Meme" width="190" />
+  <img src="public/meme/meme9.png" alt="Foto Meme" width="190" />
+  <img src="public/meme/meme7.png" alt="Foto Meme" width="190" />
 </div>
