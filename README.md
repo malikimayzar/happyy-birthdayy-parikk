@@ -57,3 +57,6 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 </div>
 
 ## Mogaa..... Sukaa.... yaaa...(sama aku ☝️😨) sama web nya...
+
+
+### The world asks me to face everything, but with you, I’d rather lose it all and be anything, even a fool for you
