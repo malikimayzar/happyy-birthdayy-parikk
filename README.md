@@ -19,7 +19,7 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 ## oiyaaa parikkkk...., janiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
 
 <div align="center">
-  <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="300" />
+  <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="250" />
   <img src="public/meme/meme12.png" alt="Deskripsi Foto" width="250" />
 </div>
 
@@ -60,12 +60,12 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 ## Mogaa..... Sukaa.... yaaa...(sama aku ☝️😨) sama web nya...
 
 
-### Out there, I have to understand everything. But when I'm with you, I can be anything, even a fool, for you.
+### Out there, I have to appear to understand everything. But when I'm with you, I can be anything, even a fool, for you.
 
 <div align="center">
-  <img src="public/meme/meme11.png" alt="Foto Teks" width="170" />
-  <img src="public/meme/meme10.png" alt="Foto Meme" width="165" />
-  <img src="public/meme/meme8.png" alt="Foto Meme" width="170" />
-  <img src="public/meme/meme9.jpeg" alt="Foto Meme" width="190" />
-  <img src="public/meme/meme7.jpeg" alt="Foto Meme" width="190" />
+  <img src="public/meme/meme11.png" alt="Foto Teks" width="165" />
+  <img src="public/meme/meme10.png" alt="Foto Meme" width="168" />
+  <img src="public/meme/meme8.png" alt="Foto Meme" width="168" />
+  <img src="public/meme/meme9.png" alt="Foto Meme" width="147" />
+  <img src="public/meme/meme7.png" alt="Foto Meme" width="165" />
 </div>

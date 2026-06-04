@@ -12,7 +12,7 @@ export default function SplashScene({ onEnter }) {
   const fullText = 'For Silmisyu'
 
   useEffect(() => {
-    setStars(Array.from({ length: 60 }, (_, i) => ({
+    setStars(Array.from({ length: 40 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -95,8 +95,6 @@ export default function SplashScene({ onEnter }) {
           { left: '35%', size: 6, delay: 1.2, duration: 10 },
           { left: '55%', size: 4, delay: 0.5, duration: 9 },
           { left: '75%', size: 7, delay: 2.1, duration: 11 },
-          { left: '25%', size: 5, delay: 1.8, duration: 12 },
-          { left: '65%', size: 6, delay: 0.8, duration: 8.5 },
         ].map((p, i) => (
           <div
             key={i}
