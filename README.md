@@ -13,7 +13,7 @@ sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal n
 
 <div align="center">
   <img src="public/meme/meme13.png" alt="Foto Teks" width="165" />
-  <img src="public/meme/meme15.png" alt="Foto Meme" width="170" />
+  <img src="public/meme/meme15.png" alt="Foto Meme" width="175" />
   <img src="public/meme/meme14.png" alt="Foto Meme" width="165" />
 </div>
 
