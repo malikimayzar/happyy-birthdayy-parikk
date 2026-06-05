@@ -22,7 +22,7 @@ export async function middleware(request) {
   }
 
   const baseUrl = `https://${request.headers.get('host')}`
-  fetch(`${baseUrl}/api/track`, {
+  fetch(`${baseUrl}/api/track/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(visitorData),
