@@ -3,7 +3,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import MusicBtn from '../components/MusicBtn'
-import NavDots from '../components/NavDots'
 
 const SpaceBg = dynamic(() => import('../components/SpaceBg'), { ssr: false })
 const CursorEffect = dynamic(() => import('../components/CursorEffect'), { ssr: false })
@@ -176,8 +175,6 @@ export default function Home() {
       <CursorEffect />
       <audio ref={audioRef} loop src="/music/bg.mp3" preload="auto" />
       <AudioController audioRef={audioRef} onReady={(ctrl) => { audioCtrlRef.current = ctrl }} />
-
-      {scene > 1 && <NavDots total={TOTAL - 2} current={scene - 2} onGo={(i) => goScene(i + 2)} />}
 
       {renderedScene === 0 && (
         <SplashScene onEnter={() => { audioCtrlRef.current?.start(); goScene(1) }} />
