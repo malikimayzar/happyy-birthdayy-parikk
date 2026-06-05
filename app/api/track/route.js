@@ -127,7 +127,11 @@ ${sceneEmoji[prevScene] || '▶️'} ${prevScene} → ${sceneEmoji[scene] || '�
 }
 
 async function handleDuration(data) {
-  const { ip, duration } = data 
+  const { ip, duration } = data
+  const durationKey = `dur_cd:${ip}`
+  const lastDur = await redis.get(durationKey)
+  if (lastDur) return { skipped: true }
+  await redis.set(durationKey, 1, { ex: 30 })
   const menit = Math.floor(duration / 60)
   const detik = duration % 60
   const durasiStr = menit > 0 ? `${menit} menit ${detik} detik` : `${detik} detik`
@@ -170,6 +174,10 @@ export async function POST(request) {
   try {
     const data = await request.json()
     const { type } = data
+    const realIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      || request.headers.get('x-real-ip')
+      || 'unknown'
+    data.ip = realIp
 
     if (type === 'scene') return NextResponse.json(await handleScene(data))
     if (type === 'duration') return NextResponse.json(await handleDuration(data))
