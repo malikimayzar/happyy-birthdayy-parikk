@@ -3,7 +3,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import MusicBtn from '../components/MusicBtn'
-
 const SpaceBg = dynamic(() => import('../components/SpaceBg'), { ssr: false })
 const CursorEffect = dynamic(() => import('../components/CursorEffect'), { ssr: false })
 const SplashScene = dynamic(() => import('../components/SplashScene'), { ssr: false })
@@ -126,8 +125,11 @@ export default function Home() {
 
   useEffect(() => {
     const startTime = Date.now()
+    let sent = false  
 
     const sendDuration = () => {
+      if (sent) return  
+      sent = true
       const duration = Math.floor((Date.now() - startTime) / 1000)
       if (duration < 3) return
       navigator.sendBeacon('/api/track', JSON.stringify({
@@ -188,7 +190,7 @@ export default function Home() {
 
   const goScene = useCallback((n) => {
     if (n < 0 || n >= TOTAL) return
-    
+
     trackScene(sceneRef.current, n)
 
     if (n === 4) {
