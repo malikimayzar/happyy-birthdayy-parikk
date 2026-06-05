@@ -26,7 +26,7 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 ## oiyaaa parikkkk...., janiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
 
 <div align="center">
-  <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="150" />
+  <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="250" />
   <img src="public/meme/meme12.png" alt="Deskripsi Foto" width="250" />
 </div>
 
