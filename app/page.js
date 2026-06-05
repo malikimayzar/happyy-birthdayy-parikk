@@ -16,6 +16,7 @@ const HeartFinale = dynamic(() => import('../components/HeartFinale'), {
 })
 
 const TOTAL = 5
+const SCENE_NAMES = ['Splash', 'Matrix', 'Starfield', 'Book', 'HeartFinale']
 
 let audioUnlocked = false
 function unlockAudio() {
@@ -66,6 +67,19 @@ function triggerGlitch() {
   body.classList.add('glitch-active')
   setTimeout(() => body.classList.remove('glitch-active'), 320)
 }
+ 
+function trackScene(prevScene, newScene) {
+  fetch('/api/track', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: 'scene',
+      ip: 'auto',
+      scene: SCENE_NAMES[newScene],
+      prevScene: SCENE_NAMES[prevScene],
+    }),
+  }).catch(() => {})
+}
 
 function AudioController({ audioRef, onReady }) {
   const [playing, setPlaying] = useState(false)
@@ -108,7 +122,30 @@ export default function Home() {
   const audioRef = useRef(null)
   const audioCtrlRef = useRef(null)
   const sceneRef = useRef(0)
-  const fadingRef = useRef(false) 
+  const fadingRef = useRef(false)
+
+  useEffect(() => {
+    const startTime = Date.now()
+
+    const sendDuration = () => {
+      const duration = Math.floor((Date.now() - startTime) / 1000)
+      if (duration < 3) return
+      navigator.sendBeacon('/api/track', JSON.stringify({
+        type: 'duration',
+        ip: 'auto',
+        duration,
+      }))
+    }
+
+    window.addEventListener('beforeunload', sendDuration)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendDuration()
+    })
+
+    return () => {
+      window.removeEventListener('beforeunload', sendDuration)
+    }
+  }, [])
 
   useEffect(() => {
     sceneRef.current = scene
@@ -118,7 +155,7 @@ export default function Home() {
     const handler = (e) => {
       unlockAudio()
       if (sceneRef.current === 1) return
-      if (fadingRef.current) return 
+      if (fadingRef.current) return
       const x = e.clientX ?? e.touches?.[0]?.clientX
       const y = e.clientY ?? e.touches?.[0]?.clientY
       if (x !== undefined) spawnBurst(x, y)
@@ -151,15 +188,17 @@ export default function Home() {
 
   const goScene = useCallback((n) => {
     if (n < 0 || n >= TOTAL) return
+    
+    trackScene(sceneRef.current, n)
 
     if (n === 4) {
-      fadingRef.current = true   
+      fadingRef.current = true
       setScene(4)
       setFadeOpacity(1)
       setTimeout(() => setRenderedScene(4), 350)
       setTimeout(() => {
         setFadeOpacity(0)
-        fadingRef.current = false 
+        fadingRef.current = false
       }, 700)
       return
     }
@@ -184,7 +223,6 @@ export default function Home() {
       {renderedScene === 3 && <BookScene onDone={() => goScene(4)} />}
       {renderedScene === 4 && <HeartFinale />}
 
-      {/* Fade overlay hitam — jembatan antar scene */}
       <div style={{
         position: 'fixed', inset: 0,
         zIndex: 99999,
