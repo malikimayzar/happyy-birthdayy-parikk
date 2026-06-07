@@ -9,7 +9,8 @@
 
 halooo selamat ulang tahun yaaa..., semoga panjang umur, sehat selalu & dilancarkan segala urusan nya.
 semoga hal-hal baik selalu datang ke ke parika silmisyu, oiyaaaa. ngomong-ngomong kalo web nya ada bug,
-sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal nya xixixixixixixi sebenernya aku, kurang suka(tapi sukanya K@MU😱😱😱😱😱😱😱😱😱😱) bikin web karena kurang minat(tapi minat nya ke K@MU)
+sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal nya xixixixixixixi sebenernya aku, kurang suka("tapiiii......,  sukanya sama K@MU gimana... dong....v☝🏻😨☝🏻😨☝🏻😨☝🏻😨v☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨") bikin web karena kurang minat("tapiiiii.... minat nya ke K@MU  😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱")
+
 
 <div align="center">
   <img src="public/meme/meme13.png" alt="Foto Teks" width="165" />
@@ -19,11 +20,14 @@ sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal n
 
 
 ## wakaakakaa, tapiiiii...... GAPAPAPAPA deng... khusus "BUAT"
-Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain(nu benerr wae maliki🤭)
+Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISAH......, Myyyy..... ANG3LL....., Myyy..... $1LM111....., MAYLIKIMAYZARR apa siii yang ga di usahain("nu benerr wae maliki 😈😈😈😈😈😈")
 
-<img src="public/meme/meme2.png" alt="meme" width="165" style="display: block; margin-left: 20px;" />
+<div align="center">
+  <img src="public/meme/meme2.png" alt="Foto Teks" width="165" />
+  <img src="public/meme/meme16.png" alt="Foto Meme" width="178" />
+</div>
 
-## oiyaaa parikkkk...., janiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
+## oiyaaa parikkkk...., janjiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
 
 <div align="center">
   <img src="public/meme/meme4.jpeg" alt="Deskripsi Foto" width="250" />
@@ -34,11 +38,15 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 ### aku yapping, alay cuma ke kamu doangggg...., ketua rada "BUKAN" rada lagi.... deng, si kami "JAIMMMM" parahhh
 
 
-## SEKAAALIII LAGIIII METTT ULANGG TAHUNNN PAaAAaAARIKAaAaAAAa...
+## SEKAAALIII LAGIIII METTT ULANGG TAHUNNNNNN......
 
-## samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi 🤭
+# PAaAAaAARIKAaAaAAAa.........
 
-### oiyaaaa parikk Kode-Kodean lagiii ni yee...
+
+
+## samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi ☝🏻😨😱😱😱😱😱😱😱😱😱😱😱😱😱😨☝🏻
+
+### oiyaaaa parikk Kode-Kodean lagiii ni yee...☝🏻🫤
 <img src="public/meme/beatles.jpeg" alt="The Beatles" width="165" />
 
 🎵 [Putar / Download Lagu](public/music/vn1.mp3)
@@ -46,16 +54,16 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 
     [The Beatles][0:00 - 0:14 & 0:42 - 1:19]
 
-### ehh.. parikk..., Temen aku mau ngomong katanya.... 
+### ehh.. parikk..., Temen aku mau ngomong katanya.... ☝🏻😲
 
 [Putar / Download Pesan Suara](public/music/vn2.mp3)
 
 <img src="public/meme/image.png" alt="The Beatles" width="165" />
 
 
-# Ekhemmmm.....
-## Ekhemm....
-### ekhhemmm di tunggu....,  respon nya di tempat biasa Ekhemm.... 
+# Ekhemmmm..... 🤭
+## Ekhemm.... ☝🏻😝
+### ekhhemmm di tunggu....,  respon nya di tempat biasa Ekhemm.... 😈😈😈😈😈😈😈😈
 
 <div align="center">
   <img src="public/meme/meme3.png" alt="Foto Teks" width="170" />
@@ -76,3 +84,4 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
   <img src="public/meme/meme9.png" alt="Foto Meme" width="147" />
   <img src="public/meme/meme7.png" alt="Foto Meme" width="165" />
 </div>
+
