@@ -23,7 +23,7 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 
 <div align="center">
   <img src="public/meme/meme2.png" alt="Foto Teks" width="165" />
-  <img src="public/meme/meme16.png" alt="Foto Meme" width="178" />
+  <img src="public/meme/meme16.png" alt="Foto Meme" width="185" />
 </div>
 
 ## oiyaaa parikkkk...., janjiiii yaaaa.. jangan  di "Sebarrrrr" yaaaaa..... yang ytta, ytta ajjah😈😈😈
