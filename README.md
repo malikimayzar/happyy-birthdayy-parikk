@@ -43,7 +43,7 @@ Myyyy... B1N1....., Myy.... I$TR1....., Myyy....., W1F3......., Myyyyy..... KISA
 
 
 
-## samaaa semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi ☝🏻😨😱😱😱😱😱😱😱😱😱😱😱😱😱😨☝🏻
+## samaaa...... semangattt belajarr nyaaa...., tetehhh silmiii aku maaa ga di semangatin juga tiap hari udah semangatt.. belajar nya xixixxixixxixi ☝🏻😨😱😱😱😱😱😱😱😱😱😱😱😱😱😨☝🏻
 
 ### oiyaaaa parikk Kode-Kodean lagiii ni yee...☝🏻🫤
 <img src="public/meme/beatles.jpeg" alt="The Beatles" width="165" />
