@@ -9,7 +9,7 @@
 
 halooo selamat ulang tahun yaaa..., semoga panjang umur, sehat selalu & dilancarkan segala urusan nya.
 semoga hal-hal baik selalu datang ke ke parika silmisyu, oiyaaaa. ngomong-ngomong kalo web nya ada bug,
-sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal nya xixixixixixixi sebenernya aku, kurang suka(tapi sukanya K@MU😱😱😱😱😱😱😱😱😱😱) bikin web karena kurang minat(tapi minat nya ke K@MU)
+sama kurang baguss, sorry yaaa...☝🏻😨, baru pertama kali bikin web soal nya xixixixixixixi sebenernya aku, kurang suka("tapi sukanya K@MU gimana dongggg...... v☝🏻😨v☝🏻😨vvv☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨☝🏻😨") bikin web karena kurang minat("tapi minat nya ke K@MU v😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱")
 
 <div align="center">
   <img src="public/meme/meme13.png" alt="Foto Teks" width="165" />
